@@ -168,25 +168,77 @@
     sections.forEach(function (s) { spy.observe(s); });
   }
 
-  /* ---------- case tabs ---------- */
+  /* ---------- case tabs + auto-rotating carousel ---------- */
+  var ROTATE_MS = 5000;
   document.querySelectorAll(".case-tabs").forEach(function (tabs) {
     var caseEl = tabs.closest(".case");
     var frame = caseEl ? caseEl.querySelector(".case-frame") : null;
     var img = frame ? frame.querySelector("img") : null;
-    tabs.querySelectorAll(".case-tab").forEach(function (tab) {
+    var tabEls = tabs.querySelectorAll(".case-tab");
+    var timer = null;
+    var idx = 0;
+
+    var show = function (i) {
+      var tab = tabEls[i];
+      if (!tab) return;
+      tabs.querySelectorAll(".case-tab").forEach(function (t) {
+        t.classList.remove("active");
+      });
+      // restart the progress bar animation
+      tab.classList.add("active");
+      if (frame && img) {
+        img.src = tab.dataset.shot;
+        img.alt = tab.dataset.cap;
+        frame.dataset.zoom = tab.dataset.shot;
+        frame.dataset.cap = tab.dataset.cap;
+      }
+    };
+
+    var next = function () {
+      idx = (idx + 1) % tabEls.length;
+      show(idx);
+    };
+
+    var start = function () {
+      if (reduce || tabEls.length < 2) return;
+      stop();
+      tabs.classList.remove("paused");
+      timer = setInterval(next, ROTATE_MS);
+    };
+    var stop = function () {
+      if (timer) { clearInterval(timer); timer = null; }
+      tabs.classList.add("paused");
+    };
+
+    tabEls.forEach(function (tab, i) {
       tab.addEventListener("click", function () {
-        tabs.querySelectorAll(".case-tab").forEach(function (t) {
-          t.classList.remove("active");
-        });
-        tab.classList.add("active");
-        if (frame && img) {
-          img.src = tab.dataset.shot;
-          img.alt = tab.dataset.cap;
-          frame.dataset.zoom = tab.dataset.shot;
-          frame.dataset.cap = tab.dataset.cap;
-        }
+        idx = i;
+        show(idx);
+        // manual choice: pause rotation for a while, then resume
+        stop();
+        clearTimeout(tab._resume);
+        tab._resume = setTimeout(start, 12000);
       });
     });
+
+    // pause on hover anywhere over the gallery
+    var body = caseEl ? caseEl.querySelector(".case-body") : tabs.parentElement;
+    if (body) {
+      body.addEventListener("mouseenter", stop);
+      body.addEventListener("mouseleave", start);
+    }
+
+    // only rotate while the gallery is actually on screen
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) start(); else stop();
+        });
+      }, { threshold: 0.25 });
+      io.observe(frame || tabs);
+    } else {
+      start();
+    }
   });
 
   /* ---------- lightbox ---------- */

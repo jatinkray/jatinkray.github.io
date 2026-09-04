@@ -792,8 +792,14 @@ html[data-theme="light"] .moon-i { display: block; }
 
 .case-body { padding: clamp(26px, 4vw, 42px); }
 
-/* case gallery */
-.case-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+/* case gallery — tabs sit directly above the screenshot frame,
+   acting as a carousel strip */
+.case-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
 .case-tab {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -804,7 +810,9 @@ html[data-theme="light"] .moon-i { display: block; }
   background: var(--bg-inset);
   color: var(--ink-mute);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 .case-tab:hover { color: var(--ink-soft); border-color: var(--ink-faint); }
 .case-tab.active {
@@ -812,6 +820,25 @@ html[data-theme="light"] .moon-i { display: block; }
   background: var(--ops);
   border-color: var(--ops);
   font-weight: 600;
+}
+/* auto-rotate progress bar — fills across the active tab during the
+   5s dwell, showing when the carousel advances */
+.case-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 2px;
+  background: color-mix(in oklab, var(--ops-ink) 65%, transparent);
+  animation: tabProgress 5s linear forwards;
+}
+@keyframes tabProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+/* paused state (hover / manual use) freezes the progress bar */
+.case-tabs.paused .case-tab.active::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .case-tab.active::after { animation: none; display: none; }
 }
 .case-frame {
   border: 1px solid var(--line);
@@ -1003,6 +1030,21 @@ html[data-theme="light"] .moon-i { display: block; }
   margin-top: 30px;
   padding-top: 24px;
   border-top: 1px dashed var(--line);
+}
+/* dynamic tag cloud: on large viewports the tags drift gently like a
+   live word-cloud; on mobile (and reduced-motion) they stay static */
+@media (min-width: 960px) and (prefers-reduced-motion: no-preference) {
+  .case-stack .tag { animation: tagFloat 7s ease-in-out infinite; }
+  /* stagger: varied delays + durations keep the cloud organic */
+  .case-stack .tag:nth-child(3n)   { animation-duration: 6s;   animation-delay: -1.5s; }
+  .case-stack .tag:nth-child(3n+1) { animation-duration: 8s;   animation-delay: -3.2s; }
+  .case-stack .tag:nth-child(3n+2) { animation-duration: 7.5s; animation-delay: -5s;  }
+  .case-stack .tag:nth-child(5n)   { animation-duration: 9s;   animation-delay: -2.1s; }
+  .case-stack:hover .tag { animation-play-state: paused; }
+}
+@keyframes tagFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
 }
 
 /* ============================================================
