@@ -27,10 +27,10 @@
   var typedEl = document.getElementById("typed");
   if (typedEl) {
     var phrases = [
-      "whoami --role staff-sre --focus reliability",
+      "whoami --role staff-sre",
       "kubectl get platforms -o wide",
-      "uptime --since 2011 --calls 1B/day",
-      "optimus prime --mission cost -2M",
+      "uptime --since 2011 --calls 1B",
+      "optimus prime --cost -2M",
     ];
     if (reduce) {
       typedEl.textContent = phrases[0];

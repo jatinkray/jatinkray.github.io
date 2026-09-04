@@ -209,8 +209,10 @@ html[data-theme="light"] .cta::before {
 }
 @media (max-width: 700px) {
   .topbar-inner { padding: 12px 18px; gap: 10px; }
-  /* hide the topbar CV button on small screens (footer + hero still offer it) */
-  .top-actions .btn { display: none; }
+  /* CV stays reachable via footer + hero; keep Connect always visible */
+  .top-actions .topbar-cv { display: none; }
+  .top-actions .topbar-cta { font-size: 11.5px; padding: 8px 13px; flex: none; }
+  .brand .role-tag { display: none; }
 }
 .brand {
   display: flex;
@@ -369,6 +371,19 @@ html[data-theme="light"] .moon-i { display: block; }
   display: flex;
   align-items: center;
   min-height: 22px;
+  /* typed text must never shrink or clip: keep it on one line, shrinking
+     the font instead, so the cursor always trails the last letter */
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.type-line #typed { flex: 0 0 auto; }
+@media (max-width: 700px) {
+  .console-body .type-line { font-size: 11.5px; }
+  .type-line .cursor { width: 6px; height: 13px; }
+}
+@media (max-width: 420px) {
+  .console-body .type-line { font-size: 10px; }
 }
 .type-line .prompt { color: var(--ops); margin-right: 9px; }
 .type-line .cursor {
@@ -1095,19 +1110,62 @@ html[data-theme="light"] .value-card:hover {
 }
 
 /* ============================================================
-   EXPERIENCE — mission log
+   EXPERIENCE — mission log as a chronological timeline
    ============================================================ */
-.missions { display: flex; flex-direction: column; gap: 0; }
+.missions {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* room on the left for the timeline spine (mobile: spine at 10px) */
+  padding-left: 34px;
+}
+/* the continuous spine line */
+.missions::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--ops) 0%, color-mix(in oklab, var(--ops) 28%, var(--line)) 85%, transparent 100%);
+  border-radius: 2px;
+}
 .mission {
   display: grid;
   grid-template-columns: 1fr;
   gap: 14px;
-  padding: 34px 0;
-  border-top: 1px solid var(--line-soft);
+  padding: 30px 0;
   position: relative;
 }
+/* node dot on the spine — marks each mission in the chronology */
+.mission::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 38px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2.5px solid var(--ops);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--ops) 14%, transparent);
+  z-index: 1;
+}
+/* the current mission's node glows — it's "now" on the timeline */
+.mission:first-child::before {
+  background: var(--ops);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--ops) 20%, transparent), 0 0 14px color-mix(in oklab, var(--ops) 55%, transparent);
+}
 @media (min-width: 820px) {
-  .mission { grid-template-columns: 200px 1fr; gap: 34px; }
+  .missions { padding-left: 0; }
+  .missions::before { left: 229px; } /* spine runs between period column & body */
+  .mission { grid-template-columns: 200px 1fr; gap: 56px; }
+  .mission::before { left: -39px; top: 42px; }
+  /* period labels right-align against the spine */
+  .mission .m-side { align-items: flex-end; text-align: right; padding-top: 4px; }
+  .mission .m-side .m-loc { padding-right: 2px; }
+}
+@media (max-width: 819px) {
+  .mission .m-side { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 10px; }
 }
 .mission .m-side { display: flex; flex-direction: column; gap: 8px; }
 .mission .m-period {
