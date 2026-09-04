@@ -1,0 +1,10 @@
+# Build artifacts
+.imgvenv/
+.review/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Extracted text (source of truth is the PDF)
+cv.txt

@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jatin Kumar Ray · Staff Engineer, SRE &amp; Platform Leadership</title>
+    <meta
+      name="description"
+      content="Staff-level SRE and engineering leader — 14+ years scaling Kubernetes, observability and multi-cloud platforms. 1B+ API calls/day reliability at Careem, $2M/year cost optimisation, CKA/CKAD. Builder of Parqtel and LocalSight."
+    />
+    <meta name="author" content="Jatin Kumar Ray" />
+    <link rel="canonical" href="https://jatinkray.github.io/" />
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <link
+      rel="preload"
+      href="assets/fonts/SpaceGrotesk.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/JetBrainsMono.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/InterVariable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jatin Kumar Ray · Staff Engineer, SRE &amp; Platform Leadership" />
+    <meta
+      property="og:description"
+      content="14+ years scaling Kubernetes, observability and multi-cloud platforms. 1B+ API calls/day reliability, $2M/year cost optimisation, CKA/CKAD. Builder of Parqtel and LocalSight."
+    />
+    <meta property="og:url" content="https://jatinkray.github.io/" />
+    <meta property="og:site_name" content="Jatin Kumar Ray" />
+    <meta property="og:image" content="https://jatinkray.github.io/assets/img/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jatin Kumar Ray · Staff Engineer, SRE" />
+    <meta
+      name="twitter:description"
+      content="14+ years scaling Kubernetes, observability and multi-cloud platforms. 1B+ API calls/day, $2M/year cost optimisation."
+    />
+    <meta name="twitter:image" content="https://jatinkray.github.io/assets/img/og-image.png" />
+
+    <meta name="theme-color" content="#0b0d0e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f8f8" media="(prefers-color-scheme: light)" />
+
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var theme =
+            saved ||
+            (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+          if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+        } catch (e) {}
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jatin Kumar Ray",
+        "givenName": "Jatin",
+        "familyName": "Ray",
+        "jobTitle": "Staff Engineer — SRE & Platform Leadership",
+        "email": "mailto:jatin.kumar.ray@gmail.com",
+        "image": "https://jatinkray.github.io/assets/img/og-image.png",
+        "worksFor": { "@type": "Organization", "name": "Careem (Uber subsidiary)", "url": "https://careem.com" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE" },
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "Sikkim Manipal University" },
+          { "@type": "CollegeOrUniversity", "name": "RGTU Bhopal" }
+        ],
+        "knowsAbout": [
+          "Site Reliability Engineering",
+          "Kubernetes",
+          "Observability",
+          "OpenTelemetry",
+          "Prometheus",
+          "Thanos",
+          "Grafana",
+          "ClickHouse",
+          "Terraform",
+          "ArgoCD",
+          "GitOps",
+          "SLO Governance",
+          "Cloud Cost Optimisation",
+          "AWS",
+          "GCP",
+          "Azure",
+          "Model Context Protocol",
+          "Rust",
+          "Golang"
+        ],
+        "sameAs": [
+          "https://linkedin.com/in/jatinkray",
+          "https://github.com/jatinkray",
+          "https://parqtel.com",
+          "https://localsightx.github.io"
+        ]
+      }
+    </script>
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- dynamic background: telemetry mesh (canvas) + blueprint grid -->
+    <canvas id="bgMesh" aria-hidden="true"></canvas>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true"></div>
+
+    <!-- ============ SIDE NAV (report TOC) ============ -->
+    <nav class="side-nav" aria-label="Section index">
+      <a href="#report" data-sec="report"><span class="tick"></span>00 · REPORT</a>
+      <a href="#signals" data-sec="signals"><span class="tick"></span>01 · SIGNALS</a>
+      <a href="#capabilities" data-sec="capabilities"><span class="tick"></span>02 · CAPABILITIES</a>
+      <a href="#products" data-sec="products"><span class="tick"></span>03 · BUILDS</a>
+      <a href="#mission" data-sec="mission"><span class="tick"></span>04 · MISSION LOG</a>
+      <a href="#stack" data-sec="stack"><span class="tick"></span>05 · STACK</a>
+      <a href="#contact" data-sec="contact"><span class="tick"></span>06 · CONTACT</a>
+    </nav>
+
+    <!-- ============ TOP BAR ============ -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#report" class="brand">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </span>
+          <span>jatin<span style="color: var(--ops)">·kumar·</span>ray</span>
+          <span class="role-tag">STAFF SRE</span>
+        </a>
+        <div class="top-actions">
+          <a href="public/Jatin_Kumar_Ray_CV.pdf" target="_blank" rel="noopener" class="btn btn-line" style="font-size: 12.5px; padding: 9px 16px; font-weight: 600;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CV.PDF
+          </a>
+          <a href="#contact" class="btn btn-solid" style="font-size: 12.5px; padding: 9px 16px;">Hire&nbsp;→</a>
+          <button id="theme-toggle" type="button" class="icon-btn" aria-label="Toggle color theme" title="Toggle color theme">
+            <span class="sun-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+            <span class="moon-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ================================================================
+           HERO — the console
+      ================================================================= -->
+      <section id="report" class="wrap" style="padding-top: 56px; scroll-margin-top: 80px;">
+        <div class="hero-grid">
+          <!-- console card -->
+          <div class="console" data-rv>
+            <div class="console-bar">
+              <div class="console-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <span class="console-title">whoami — reliability profile</span>
+            </div>
+            <div class="console-body">
+              <div class="type-line" aria-hidden="true">
+                <span class="prompt">~$</span>
+                <span id="typed"></span><span class="cursor"></span>
+              </div>
+              <h1>Jatin Kumar Ray</h1>
+              <p class="console-summary">
+                Staff-level SRE &amp; platform leader. I run
+                <b>reliability for systems at 1B+ API calls a day</b> at Careem,
+                and build the platforms that make it possible — cutting
+                <span class="hl">$2M a year</span> from cloud spend along the way.
+                <b>14+ years</b> across Kubernetes, observability and multi-cloud,
+                now pioneering <b>AI-native operations</b> with MCP-connected agents.
+              </p>
+              <div class="console-ctas">
+                <a href="#contact" class="btn btn-solid">Get in touch <span>→</span></a>
+                <a href="public/Jatin_Kumar_Ray_CV.pdf" target="_blank" rel="noopener" class="btn btn-line">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download CV
+                </a>
+                <a href="https://linkedin.com/in/jatinkray" target="_blank" rel="noopener" class="btn btn-line">LinkedIn</a>
+              </div>
+              <div class="console-meta">
+                <span>BASE <b>Dubai, UAE</b></span>
+                <span>ROLE <b>Technical Lead SRE</b></span>
+                <span>CERTS <b>CKA · CKAD</b></span>
+                <span>STATUS <b style="color: var(--ops)">● open to opportunities</b></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- status stack -->
+          <div class="status-stack">
+            <!-- uptime card -->
+            <div class="status-card" data-rv>
+              <div class="sc-head">
+                <span class="sc-title">Live Systems</span>
+                <span class="pill pill-live"><span class="pulse-dot"></span>OPERATIONAL</span>
+              </div>
+              <div class="uptime-row">
+                <span class="ur-name">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Customer-facing APIs
+                </span>
+                <span class="ur-val">99.5%</span>
+              </div>
+              <div class="uptime-row">
+                <span class="ur-name">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                  Hungerstation APIs (prior)
+                </span>
+                <span class="ur-val">99.9%</span>
+              </div>
+              <div class="uptime-row">
+                <span class="ur-name">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                  MTTR improvement
+                </span>
+                <span class="ur-val gold">−70%</span>
+              </div>
+            </div>
+
+            <!-- sparkline -->
+            <div class="status-card spark-card" data-rv>
+              <div class="sc-head">
+                <span class="sc-title">Scale — API calls / day</span>
+                <span class="pill pill-sky"><span class="pulse-dot"></span>1B+</span>
+              </div>
+              <div class="sc-body">
+                <div class="spark-nums">
+                  <span class="big count" data-to="1" data-suffix="B+" data-decimals="0">1B+</span>
+                  <span class="unit">calls/day under my reliability mandate</span>
+                </div>
+                <svg class="spark-svg" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="sparkgrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" style="stop-color:var(--ops); stop-opacity:0.35"></stop>
+                      <stop offset="1" style="stop-color:var(--ops); stop-opacity:0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <polygon class="area" points="0,58 18,54 36,55 54,48 72,50 90,42 108,44 126,36 144,38 162,30 180,32 198,24 216,26 234,18 252,20 270,12 288,10 300,6 300,64 0,64"></polygon>
+                  <polyline points="0,58 18,54 36,55 54,48 72,50 90,42 108,44 126,36 144,38 162,30 180,32 198,24 216,26 234,18 252,20 270,12 288,10 300,6"></polyline>
+                </svg>
+                <div class="spark-cap">
+                  <span>2011 — first on-call</span>
+                  <span>TODAY — 1B+ calls/day</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- dial -->
+            <div class="status-card dial-card" data-rv>
+              <svg class="dial-svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="99.5 percent availability dial">
+                <circle class="dial-track" cx="60" cy="60" r="48" fill="none" stroke-width="9"></circle>
+                <circle id="dial" class="dial-arc" cx="60" cy="60" r="48" fill="none" stroke-width="9" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="301.6" stroke-dashoffset="301.6"></circle>
+                <text x="60" y="57" text-anchor="middle" fill="var(--ink)" font-size="21" font-weight="700" font-family="Space Grotesk" class="dial-val count" data-to="99.5" data-suffix="%" data-decimals="1">99.5%</text>
+                <text x="60" y="74" text-anchor="middle" fill="var(--ink-faint)" font-size="8.5" font-family="JetBrains Mono" letter-spacing="1">UPTIME</text>
+              </svg>
+              <div class="dial-info">
+                <div class="dv-big">SLO-grade discipline</div>
+                <div class="dv-cap">
+                  Availability targets held while cutting $2M/yr from spend — reliability
+                  <b style="color: var(--ink-soft)">and</b> economics, together.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           01 · SIGNALS — impact metrics bento
+      ================================================================= -->
+      <section id="signals" class="section wrap">
+        <div class="section-head" data-rv>
+          <span class="kicker">01 · Signals</span>
+          <h2>Impact, as measured</h2>
+          <p class="sub">
+            Numbers I'm accountable for — reliability at planetary scale, cost as an
+            engineering discipline, and teams that ship. Staff-level work means the
+            <b>system</b> gets better, not just the incidents get handled.
+          </p>
+        </div>
+
+        <div class="bento" data-rv>
+          <div class="bento-cell">
+            <div class="bc-top">
+              <span class="bc-label">Tenure</span>
+              <span class="bc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            </div>
+            <div>
+              <div class="bc-num count" data-to="14" data-suffix="+" data-decimals="0">14+</div>
+              <div class="bc-cap">years engineering cloud &amp; Kubernetes platforms in production</div>
+            </div>
+          </div>
+          <div class="bento-cell">
+            <div class="bc-top">
+              <span class="bc-label">Throughput</span>
+              <span class="bc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+            </div>
+            <div>
+              <div class="bc-num ops"><span class="count" data-to="1" data-suffix="B+" data-decimals="0">1B+</span></div>
+              <div class="bc-cap">API calls every day across the platforms I keep reliable</div>
+            </div>
+          </div>
+          <div class="bento-cell">
+            <div class="bc-top">
+              <span class="bc-label">Savings</span>
+              <span class="bc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+            </div>
+            <div>
+              <div class="bc-num gold"><span class="count" data-to="2" data-prefix="$" data-suffix="M" data-decimals="0">$2M</span></div>
+              <div class="bc-cap">per year in cloud cost optimisation — with zero reliability loss</div>
+            </div>
+          </div>
+          <div class="bento-cell">
+            <div class="bc-top">
+              <span class="bc-label">Estate</span>
+              <span class="bc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></span>
+            </div>
+            <div>
+              <div class="bc-num"><span class="count" data-to="500" data-suffix="" data-decimals="0">500</span></div>
+              <div class="bc-cap">Kubernetes nodes managed at peak — 200–500 node clusters at Hungerstation</div>
+            </div>
+          </div>
+
+          <!-- wide meter cell -->
+          <div class="bento-cell b-wide meter-cell">
+            <div class="bc-top">
+              <span class="bc-label">Reliability Engineering — depth of practice</span>
+              <span class="pill pill-live"><span class="pulse-dot"></span>SENIOR+</span>
+            </div>
+            <div class="meters">
+              <div class="meter">
+                <div class="m-head"><span class="m-name">Kubernetes &amp; platform engineering</span><span class="m-val">EXPERT · CKA/CKAD</span></div>
+                <div class="m-track"><div class="m-fill" data-fill="96"></div></div>
+              </div>
+              <div class="meter">
+                <div class="m-head"><span class="m-name">Observability (OTel · Prometheus · ClickHouse)</span><span class="m-val">EXPERT · DAILY DRIVER</span></div>
+                <div class="m-track"><div class="m-fill" data-fill="97"></div></div>
+              </div>
+              <div class="meter">
+                <div class="m-head"><span class="m-name">SLO governance &amp; incident management</span><span class="m-val">STAFF-LEVEL</span></div>
+                <div class="m-track"><div class="m-fill gold" data-fill="93"></div></div>
+              </div>
+              <div class="meter">
+                <div class="m-head"><span class="m-name">Team leadership &amp; mentorship</span><span class="m-val">CURRENT ROLE</span></div>
+                <div class="m-track"><div class="m-fill sky" data-fill="90"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- tall cell: what staff means -->
+          <div class="bento-cell b-tall" style="justify-content: flex-start; gap: 14px;">
+            <div class="bc-top">
+              <span class="bc-label">Operating principles</span>
+              <span class="bc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 13px;">
+              <div>
+                <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--ink);">Automate the second time</div>
+                <div style="font-size: 12px; color: var(--ink-mute); line-height: 1.5; margin-top: 3px;">Toil is a bug. My teams' self-serve portals and auto-instrumentation eliminate it permanently.</div>
+              </div>
+              <div>
+                <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--ink);">SLOs before heroics</div>
+                <div style="font-size: 12px; color: var(--ink-mute); line-height: 1.5; margin-top: 3px;">Error budgets decide priorities — governance beats firefighting culture.</div>
+              </div>
+              <div>
+                <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--ink);">Cost is an SLO</div>
+                <div style="font-size: 12px; color: var(--ink-mute); line-height: 1.5; margin-top: 3px;">Telemetry economics engineered with the same rigor as availability.</div>
+              </div>
+              <div>
+                <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--ink);">AI-native operations</div>
+                <div style="font-size: 12px; color: var(--ink-mute); line-height: 1.5; margin-top: 3px;">LLM agents wired to infra via MCP — context-aware troubleshooting, today.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- wide tags cell -->
+          <div class="bento-cell b-wide" style="justify-content: flex-start;">
+            <div class="bc-top" style="margin-bottom: 0;">
+              <span class="bc-label">Multi-cloud production experience</span>
+              <span class="pill pill-gold"><span class="pulse-dot"></span>3 CLOUDS</span>
+            </div>
+            <div class="tag-cloud">
+              <span class="tag">AWS — Careem, current</span>
+              <span class="tag">GCP — Careem multi-cloud, Hungerstation, G4S</span>
+              <span class="tag">AZURE — Carrefour, 3 expert certifications</span>
+              <span class="tag">GitOps — ArgoCD · Terraform · Helm</span>
+              <span class="tag">KEDA autoscaling</span>
+              <span class="tag">GitHub Actions CI/CD</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           02 · CAPABILITIES — value props
+      ================================================================= -->
+      <section id="capabilities" class="section wrap">
+        <div class="section-head" data-rv>
+          <span class="kicker">02 · Capabilities</span>
+          <h2>What I bring to a staff role</h2>
+          <p class="sub">
+            The difference between operating systems and <b>leading the platform</b>:
+            I build force multipliers — teams, tooling and standards that make every
+            engineer faster and every system safer.
+          </p>
+        </div>
+        <div class="values">
+          <div class="value-card" data-rv>
+            <span class="v-num">01</span>
+            <div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <h3>Platforms, not tickets</h3>
+            <p>
+              Self-serve onboarding portals, <b>auto-instrumentation for new microservices</b>,
+              anomaly-detection presets — automation-first tooling that eliminated manual
+              toil across Careem's observability platform.
+            </p>
+            <div class="v-proof"><span class="vp-dot"></span>Careem · 1B+ calls/day estate</div>
+          </div>
+          <div class="value-card" data-rv>
+            <span class="v-num">02</span>
+            <div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <h3>Engineering leadership</h3>
+            <p>
+              Directing and mentoring the observability platform team with clear
+              <b>delivery ownership and performance leadership</b> — growing engineers,
+              not dependencies. OKR-driven roadmaps since McKinsey.
+            </p>
+            <div class="v-proof"><span class="vp-dot"></span>Team lead · current role</div>
+          </div>
+          <div class="value-card" data-rv>
+            <span class="v-num">03</span>
+            <div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <h3>Reliability governance</h3>
+            <p>
+              Established <b>SLOs, SLIs and error budgets</b> across all customer-facing
+              services with strict availability targets — governance standards that
+              outlast any single incident or on-call rotation.
+            </p>
+            <div class="v-proof"><span class="vp-dot"></span>99.5% sustained availability</div>
+          </div>
+          <div class="value-card" data-rv>
+            <span class="v-num">04</span>
+            <div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <h3>FinOps at scale</h3>
+            <p>
+              <b>$2M/year</b> telemetry cost optimisation at Careem; <b>50%</b> cloud cost
+              reduction at Hungerstation — spend treated as an engineering problem with
+              levers, dashboards and accountability.
+            </p>
+            <div class="v-proof"><span class="vp-dot"></span>$2.5M+ total savings delivered</div>
+          </div>
+          <div class="value-card" data-rv>
+            <span class="v-num">05</span>
+            <div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.92L12 22l-.75-12.08A4.002 4.002 0 0 1 12 2z"/><path d="M12 6v.01"/></svg></div>
+            <h3>AI-native operations</h3>
+            <p>
+              Pioneered <b>Model Context Protocol (MCP)</b> integration connecting LLMs
+              with live infrastructure data for context-aware troubleshooting agents —
+              production AI, not demos.
+            </p>
+            <div class="v-proof"><span class="vp-dot"></span>MCP in production · 7 OSS servers</div>
+          </div>
+          <div class="value-card" data-rv>
+            <span class="v-num">06</span>
+            <div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+            <h3>Builder's track record</h3>
+            <p>
+              Staff engineers build. <b>Parqtel</b> (Rust observability engine) and
+              <b>LocalSight</b> (privacy-first video AI) — both designed end-to-end, both
+              live, both open-source with hardened supply chains.
+            </p>
+            <div class="v-proof"><span class="vp-dot"></span>2 products shipped · open-source</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           03 · BUILDS — case studies
+      ================================================================= -->
+      <section id="products" class="section wrap">
+        <div class="section-head" data-rv>
+          <span class="kicker">03 · Builds</span>
+          <h2>Shipped &amp; operated</h2>
+          <p class="sub">
+            Two production-grade platforms, designed and built end-to-end — proof that I
+            don't just run systems, I <b>create the tools SRE teams run</b>.
+          </p>
+        </div>
+
+        <!-- ============ CASE 01: PARQTEL ============ -->
+        <article class="case" data-rv id="parqtel">
+          <div class="case-banner">
+            <div>
+              <div class="case-id">
+                <span class="cid">BUILD 01</span>
+                <span class="cid-type">Observability Engine · Rust · Apache-2.0</span>
+              </div>
+              <h3 class="case-title">Parqtel</h3>
+              <p class="case-tagline">
+                Ultra-lightweight SRE observability engine — OTLP metrics, logs &amp;
+                traces streamed into <b>compressed Parquet</b>, queryable with a
+                <b>Prometheus-compatible API</b>, with built-in alerting and 7 MCP
+                tool-servers for AI-driven incident response.
+              </p>
+              <div class="case-links">
+                <a class="btn btn-solid" href="https://parqtel.com" target="_blank" rel="noopener">Live site <span>↗</span></a>
+                <a class="btn btn-line" href="https://github.com/parqtel/parqtel-oss" target="_blank" rel="noopener">GitHub <span>↗</span></a>
+              </div>
+            </div>
+            <div class="case-tabs" role="tablist" aria-label="Parqtel console screenshots">
+              <button class="case-tab active" data-shot="assets/img/shots/parqtel/overview.jpg" data-cap="Parqtel — Overview: per-signal stat cards &amp; system health">OVERVIEW</button>
+              <button class="case-tab" data-shot="assets/img/shots/parqtel/metrics.jpg" data-cap="Parqtel — Metrics view with guided PromQL builder">METRICS</button>
+              <button class="case-tab" data-shot="assets/img/shots/parqtel/logs.jpg" data-cap="Parqtel — Logs view with faceted search">LOGS</button>
+              <button class="case-tab" data-shot="assets/img/shots/parqtel/traces.jpg" data-cap="Parqtel — Traces: grouped browse + waterfall">TRACES</button>
+              <button class="case-tab" data-shot="assets/img/shots/parqtel/alerts.jpg" data-cap="Parqtel — Alerts stream with evidence &amp; correlated signals">ALERTS</button>
+              <button class="case-tab" data-shot="assets/img/shots/parqtel/alerts-rules.jpg" data-cap="Parqtel — Alert rule editor with YAML escape hatch">RULES</button>
+            </div>
+          </div>
+
+          <div class="case-kpis">
+            <div class="kpi"><div class="kv"><span class="count" data-to="10" data-suffix="k/s" data-decimals="0">10k/s</span></div><div class="kl">Sustained ingest benchmarked on a 10M-sample dataset, zero errors</div></div>
+            <div class="kpi"><div class="kv"><span class="count" data-to="10" data-prefix="" data-suffix="M" data-decimals="0">10M</span></div><div class="kl">Sample corpus ingested — metrics, logs &amp; traces combined</div></div>
+            <div class="kpi"><div class="kv"><span class="count" data-to="12.7" data-suffix="ms" data-decimals="1">12.7ms</span></div><div class="kl">Instant query p50 — p99 range query just 160ms</div></div>
+            <div class="kpi"><div class="kv"><span class="count" data-to="15" data-prefix="~" data-suffix="MB" data-decimals="0">~15MB</span></div><div class="kl">Single static binary, distroless image — edge-ready</div></div>
+          </div>
+
+          <div class="case-body">
+            <div class="case-frame" data-zoom="assets/img/shots/parqtel/overview.jpg" data-cap="Parqtel — Overview" tabindex="0" role="button" aria-label="Enlarge Parqtel overview screenshot">
+              <img src="assets/img/shots/parqtel/overview.jpg" alt="Parqtel overview landing pane showing per-signal stat cards, system health and quick navigation" width="1440" height="900" loading="lazy" />
+              <span class="zoom-hint">CLICK TO ENLARGE</span>
+            </div>
+
+            <div class="case-detail">
+              <div class="case-diagram">
+                <div class="dg-cap">Runtime architecture — single binary, zero external deps</div>
+                <div class="fd">
+                  <div class="fd-stage">
+                    <div class="fd-stage-title">OTLP Ingest</div>
+                    <div class="fd-node">
+                      <div class="fn">OTel SDKs</div>
+                      <div class="fs">gRPC 4317 · HTTP</div>
+                    </div>
+                    <div class="fd-node">
+                      <div class="fn">Collectors</div>
+                      <div class="fs">metrics · logs · traces</div>
+                    </div>
+                    <div class="fd-node">
+                      <div class="fn">Edge fleets</div>
+                      <div class="fs">ARM · low footprint</div>
+                    </div>
+                  </div>
+                  <div class="fd-conn" aria-hidden="true"><div class="fd-track"><span class="fd-dot"></span><span class="fd-dot"></span><span class="fd-dot"></span></div></div>
+                  <div class="fd-stage fd-mid">
+                    <div class="fd-stage-title">Parqtel Server (Axum)</div>
+                    <div class="fd-node fd-core">
+                      <div class="fn">parqtel-core</div>
+                      <div class="fs">query · pipelines · alerting · retention</div>
+                    </div>
+                    <div class="fd-node fd-store">
+                      <div class="fn">Parquet + Zstd</div>
+                      <div class="fs">columnar · 10–20× compression</div>
+                    </div>
+                  </div>
+                  <div class="fd-conn" aria-hidden="true"><div class="fd-track"><span class="fd-dot"></span><span class="fd-dot"></span><span class="fd-dot"></span></div></div>
+                  <div class="fd-stage">
+                    <div class="fd-stage-title">Surfaces</div>
+                    <div class="fd-node">
+                      <div class="fn">Built-in web UI</div>
+                      <div class="fs">air-gap ready · 42 KB</div>
+                    </div>
+                    <div class="fd-node">
+                      <div class="fn">Grafana datasource</div>
+                      <div class="fs">Prom API v1 · SimpleJSON</div>
+                    </div>
+                    <div class="fd-node">
+                      <div class="fn">Alert engine</div>
+                      <div class="fs">state machine · noise score</div>
+                    </div>
+                    <div class="fd-node">
+                      <div class="fn">7 MCP servers</div>
+                      <div class="fs">Slack · PagerDuty · Jira · Notion…</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="case-facts">
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><h4>Columnar economics</h4></div>
+                  <p>Parquet + Zstd with block compaction and retention-as-code — <b>10–20× cheaper</b> long-term telemetry storage than TSDB, with drop-in dashboards.</p>
+                </div>
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><h4>PromQL compatibility</h4></div>
+                  <p>Existing Grafana dashboards work <b>unmodified</b> — instant &amp; range queries, aggregations, recording rules, span-metrics (RED) auto-derived from traces.</p>
+                </div>
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><h4>Supply-chain hardened</h4></div>
+                  <p>Distroless ~15MB image, cosign-signed releases, Trivy + CodeQL, SBOM, OpenSSF Scorecard — and <b>zero unsafe Rust</b> at compile time.</p>
+                </div>
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="3"/></svg></span><h4>AI-native operations</h4></div>
+                  <p>Seven MCP tool-servers (Slack, PagerDuty, Jira, Notion, Discord, GDocs, Parqtel) give LLM agents <b>governed telemetry access</b> for automated RCA.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-stack">
+              <span class="tag">Rust · Axum</span><span class="tag">OTLP gRPC/HTTP</span><span class="tag">Apache Parquet + Zstd</span><span class="tag">PromQL-compatible</span><span class="tag">Grafana datasource</span><span class="tag">Alert state machine</span><span class="tag">Span-metrics (RED)</span><span class="tag">Tail sampling</span><span class="tag">Log→metric pipelines</span><span class="tag">Helm OCI · Distroless</span><span class="tag">Cosign + SBOM</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============ CASE 02: LOCALSIGHT ============ -->
+        <article class="case" data-rv id="localsight">
+          <div class="case-banner">
+            <div>
+              <div class="case-id">
+                <span class="cid">BUILD 02</span>
+                <span class="cid-type">AI Video Intelligence · Python · Zero-trust</span>
+              </div>
+              <h3 class="case-title">LocalSight</h3>
+              <p class="case-tagline">
+                Local-first, <b>privacy-by-design</b> video intelligence for NVR &amp;
+                IP-camera fleets — local ONNX inference, behavior analytics and ANPR,
+                with <b>zero video leaving the site</b> and security hardened to the core.
+              </p>
+              <div class="case-links">
+                <a class="btn btn-solid" href="https://localsightx.github.io" target="_blank" rel="noopener">Live site <span>↗</span></a>
+                <a class="btn btn-line" href="https://github.com/localsightX/localsight" target="_blank" rel="noopener">GitHub <span>↗</span></a>
+              </div>
+            </div>
+            <div class="case-tabs" role="tablist" aria-label="LocalSight console screenshots">
+              <button class="case-tab active" data-shot="assets/img/shots/localsight/overview.jpg" data-cap="LocalSight — Overview NOC screen">OVERVIEW</button>
+              <button class="case-tab" data-shot="assets/img/shots/localsight/events.jpg" data-cap="LocalSight — Events with bulk select &amp; audited CSV export">EVENTS</button>
+              <button class="case-tab" data-shot="assets/img/shots/localsight/drawer.jpg" data-cap="LocalSight — Evidence drawer: playback &amp; signed clip export">EVIDENCE</button>
+              <button class="case-tab" data-shot="assets/img/shots/localsight/analytics.jpg" data-cap="LocalSight — Analytics: occupancy, dwell, heatmaps">ANALYTICS</button>
+              <button class="case-tab" data-shot="assets/img/shots/localsight/cameras.jpg" data-cap="LocalSight — Camera fleet with ONVIF discovery">CAMERAS</button>
+              <button class="case-tab" data-shot="assets/img/shots/localsight/audit.jpg" data-cap="LocalSight — Immutable audit log">AUDIT</button>
+            </div>
+          </div>
+
+          <div class="case-kpis">
+            <div class="kpi"><div class="kv"><span class="count" data-to="0" data-suffix="-cloud" data-raw="0-cloud" data-decimals="0">0-cloud</span></div><div class="kl">Bytes of video leaving the site — privacy as architecture</div></div>
+            <div class="kpi"><div class="kv"><span class="count" data-to="74" data-suffix="" data-decimals="0">74</span></div><div class="kl">Automated tests at 74% coverage, incl. review regressions</div></div>
+            <div class="kpi"><div class="kv"><span class="count" data-to="9" data-suffix="" data-decimals="0">9</span></div><div class="kl">CI jobs — CodeQL, Semgrep, Trivy, dep-audit, SBOM, Docker</div></div>
+            <div class="kpi"><div class="kv"><span class="count" data-to="10" data-suffix="" data-decimals="0">10</span></div><div class="kl">Camera vendors supported day one via ONVIF + presets</div></div>
+          </div>
+
+          <div class="case-body">
+            <div class="case-frame" data-zoom="assets/img/shots/localsight/overview.jpg" data-cap="LocalSight — Overview" tabindex="0" role="button" aria-label="Enlarge LocalSight overview screenshot">
+              <img src="assets/img/shots/localsight/overview.jpg" alt="LocalSight web console showing the overview NOC screen with cameras, events, health and alert feed" width="1360" height="850" loading="lazy" />
+              <span class="zoom-hint">CLICK TO ENLARGE</span>
+            </div>
+
+            <div class="case-detail">
+              <div class="case-diagram">
+                <div class="dg-cap">Data flow — inference on substream, main stream recorded on-prem</div>
+                <div class="fd">
+                  <div class="fd-stage">
+                    <div class="fd-stage-title">Edge</div>
+                    <div class="fd-node">
+                      <div class="fn">Cameras / NVRs</div>
+                      <div class="fs">RTSP · RTSPS · ONVIF</div>
+                    </div>
+                    <div class="fd-node">
+                      <div class="fn">Vendor presets</div>
+                      <div class="fs">Axis · Hikvision · +8</div>
+                    </div>
+                  </div>
+                  <div class="fd-conn" aria-hidden="true"><div class="fd-track"><span class="fd-dot"></span><span class="fd-dot"></span><span class="fd-dot"></span></div></div>
+                  <div class="fd-stage fd-mid">
+                    <div class="fd-stage-title">Local pipeline</div>
+                    <div class="fd-node fd-core">
+                      <div class="fn">Local AI worker</div>
+                      <div class="fs">ONNX detection · tracking · rules · ANPR</div>
+                    </div>
+                    <div class="fd-node fd-store">
+                      <div class="fn">On-prem recording</div>
+                      <div class="fs">segmented MP4 · retention sweeper</div>
+                    </div>
+                  </div>
+                  <div class="fd-conn" aria-hidden="true"><div class="fd-track"><span class="fd-dot"></span><span class="fd-dot"></span><span class="fd-dot"></span></div></div>
+                  <div class="fd-stage">
+                    <div class="fd-stage-title">Operate</div>
+                    <div class="fd-node">
+                      <div class="fn">Secure web console</div>
+                      <div class="fs">RBAC · MFA · LL-HLS live</div>
+                    </div>
+                    <div class="fd-node">
+                      <div class="fn">Alerts &amp; analytics</div>
+                      <div class="fs">webhook · email · MQTT · push</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="case-facts">
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><h4>Privacy by architecture</h4></div>
+                  <p>All inference is local; embeddings, plates and identities are <b>envelope-encrypted</b>; recognition is strictly opt-in. No insecure defaults — the app refuses to boot without real secrets.</p>
+                </div>
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span><h4>Full perception stack</h4></div>
+                  <p>Multi-class ONNX detection (person/vehicle/animal/bag…), <b>SORT-style tracking</b> with stable IDs, behavior rules — line-cross, intrusion, loitering, crowd — and encrypted ANPR.</p>
+                </div>
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><h4>Zero-trust defaults</h4></div>
+                  <p>Argon2id, JWT rotation, TOTP MFA, lockout, RBAC, immutable audit log, SSRF egress guard — <b>security-first</b> from first commit, verified by 74 tests.</p>
+                </div>
+                <div class="fact">
+                  <div class="f-head"><span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><h4>Hardened CI/CD</h4></div>
+                  <p>9-job pipeline: lint, tests, integration, dep-audit, CodeQL, Semgrep, Trivy, Docker build, SBOM — <b>supply chain as code</b>.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-stack">
+              <span class="tag">Python · FastAPI</span><span class="tag">ONNX inference</span><span class="tag">SORT tracking</span><span class="tag">Behavior rules engine</span><span class="tag">ANPR (encrypted)</span><span class="tag">LL-HLS live view</span><span class="tag">Envelope encryption</span><span class="tag">Argon2id + TOTP MFA</span><span class="tag">RBAC · audit log</span><span class="tag">SSRF egress guard</span><span class="tag">ONVIF discovery</span><span class="tag">9-job CI/CD · SBOM</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ================================================================
+           04 · MISSION LOG — experience
+      ================================================================= -->
+      <section id="mission" class="section wrap">
+        <div class="section-head" data-rv>
+          <span class="kicker">04 · Mission log</span>
+          <h2>Fourteen years, six postings</h2>
+          <p class="sub">
+            A career built at the intersection of <b>enterprise scale and startup
+            speed</b> — from mission-critical enterprise systems to billion-call
+            consumer platforms.
+          </p>
+        </div>
+        <div class="missions">
+          <div class="mission" data-rv>
+            <div class="m-side">
+              <span class="m-period">JUN 2026 — NOW</span>
+              <span class="m-company">Parqtel <span style="color:var(--ink-faint);font-weight:400">(solopreneur)</span></span>
+              <span class="m-loc">GLOBAL · REMOTE</span>
+            </div>
+            <div>
+              <div class="m-role">Founder &amp; Principal Engineer</div>
+              <p class="m-summary">
+                Taking Parqtel from an open-source engine to a market-leading
+                observability platform. I own the product end-to-end — architecture, design,
+                AI mentorship, and small-scale team leadership — with a single-minded focus on
+                making Parqtel the default choice for cost-efficient, AI-native telemetry.
+              </p>
+              <ul>
+                <li><b>Architect.</b> Define and defend the technical vision: a single-binary Rust core, columnar Parquet storage, three query surfaces (ParQL, ParqtelQL, PQL pipelines), and an AI-native MCP layer that no incumbent observability stack ships today.</li>
+                <li><b>Product designer.</b> Shape the end-to-end user experience — a zero-dependency web console, guided query builders with a YAML escape hatch, deep-linkable views, and air-gapped operations that run anywhere from edge devices to data centers.</li>
+                <li><b>AI mentorship.</b> Coach small teams on LLM-assisted engineering and MCP-driven operations, turning AI-native workflows from a novelty into a durable team capability with real production discipline.</li>
+                <li><b>Small-scale teams.</b> Build and direct compact, high-leverage teams — setting standards, reviewing architecture, and growing engineers across time zones without the overhead of large org structures.</li>
+                <li><b>Observability specialist.</b> Dogfood Parqtel on real workloads, translate SRE pain into roadmap, and position the platform for the edge and AI era where legacy TSDB economics simply do not fit.</li>
+              </ul>
+              <div class="m-kpis">
+                <span class="m-kpi">Architect</span>
+                <span class="m-kpi">Product designer</span>
+                <span class="m-kpi">AI mentorship</span>
+                <span class="m-kpi">Small-scale teams</span>
+                <span class="m-kpi">Observability specialist</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission" data-rv>
+            <div class="m-side">
+              <span class="m-period">JUN 2022 — JUN 2026</span>
+              <span class="m-company">Careem <span style="color:var(--ink-faint);font-weight:400">(Uber)</span></span>
+              <span class="m-loc">DUBAI, UAE</span>
+            </div>
+            <div>
+              <div class="m-role">Technical Lead SRE — Observability Platform</div>
+              <p class="m-summary">
+                Led the SRE and observability platform powering reliability for systems
+                processing over one billion API calls a day. Directed a team of engineers with
+                clear delivery ownership, mentorship, and performance leadership — while
+                personally setting the reliability governance for the entire estate.
+              </p>
+              <ul>
+                <li><b>Cost engineering at scale.</b> Drove $2M per year in cloud cost optimisation through intelligent telemetry classification, tiering, and retention policies built on OpenTelemetry, Vector, and ClickHouse — without compromising a single SLO.</li>
+                <li><b>Reliability governance.</b> Established SLOs, SLIs, and error budgets across all customer-facing services with strict availability targets, and held the line at 99.5% sustained availability.</li>
+                <li><b>Platform automation.</b> Built self-serve onboarding portals, auto-instrumentation for new microservices, and anomaly-detection presets — eliminating manual toil from the entire observability workflow.</li>
+                <li><b>Multi-cloud operations.</b> Oversaw Kubernetes deployments via ArgoCD, Terraform, and Helm across AWS and GCP with disciplined GitOps practices.</li>
+                <li><b>AI-native operations.</b> Pioneered Model Context Protocol (MCP) integration connecting LLMs to real-time infrastructure data — putting context-aware troubleshooting agents into production well ahead of the industry curve.</li>
+              </ul>
+              <div class="m-kpis">
+                <span class="m-kpi">$2M/yr savings</span>
+                <span class="m-kpi">1B+ calls/day</span>
+                <span class="m-kpi">99.5% availability</span>
+                <span class="m-kpi">MCP in production</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission" data-rv>
+            <div class="m-side">
+              <span class="m-period">JUL 2021 — MAY 2022</span>
+              <span class="m-company">Hungerstation <span style="color:var(--ink-faint);font-weight:400">(Delivery Hero)</span></span>
+              <span class="m-loc">DUBAI, UAE</span>
+            </div>
+            <div>
+              <div class="m-role">Senior Site Reliability Engineer</div>
+              <p class="m-summary">
+                Owned reliability for production customer-facing APIs at a 99.9% availability
+                target, running on one of the region's largest Kubernetes estates. Left behind
+                a cheaper, faster-to-debug platform than the one I inherited.
+              </p>
+              <ul>
+                <li><b>Large-scale Kubernetes operations.</b> Managed production clusters of 200–500 nodes with a continuous-improvement approach to reliability practices, capacity, and upgrade safety.</li>
+                <li><b>Cost reduction.</b> Cut cloud infrastructure spend by 50% through GCP best practices and systematic resource optimisation — right-sizing, commitment planning, and waste elimination.</li>
+                <li><b>Observability transformation.</b> Reduced mean time to recovery by 70% by implementing a full observability stack across OpenTelemetry, Jaeger, New Relic, Datadog, and PagerDuty.</li>
+              </ul>
+              <div class="m-kpis">
+                <span class="m-kpi">−50% cloud cost</span>
+                <span class="m-kpi">−70% MTTR</span>
+                <span class="m-kpi">99.9% availability</span>
+                <span class="m-kpi">200–500 nodes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission" data-rv>
+            <div class="m-side">
+              <span class="m-period">JUL 2019 — JUL 2021</span>
+              <span class="m-company">Carrefour <span style="color:var(--ink-faint);font-weight:400">(Majid Al Futtaim)</span></span>
+              <span class="m-loc">DUBAI, UAE</span>
+            </div>
+            <div>
+              <div class="m-role">Senior DevOps Engineer</div>
+              <p class="m-summary">
+                Built and operated the Azure cloud infrastructure and Kubernetes-based
+                microservice deployments behind high-availability retail systems serving
+                the Middle East's largest retailer.
+              </p>
+              <ul>
+                <li><b>Cloud infrastructure.</b> Managed the Azure production estate and Kubernetes microservice deployments underpinning high-availability retail workloads across the region.</li>
+                <li><b>Delivery pipelines.</b> Implemented CI/CD pipelines and infrastructure monitoring with Azure DevOps, Application Insights, and Grafana — turning deployments from events into non-events.</li>
+              </ul>
+              <div class="m-kpis">
+                <span class="m-kpi">Azure production estate</span>
+                <span class="m-kpi">CI/CD + monitoring</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission" data-rv>
+            <div class="m-side">
+              <span class="m-period">AUG 2018 — JUL 2019</span>
+              <span class="m-company">McKinsey &amp; Company</span>
+              <span class="m-loc">GURGAON, INDIA</span>
+            </div>
+            <div>
+              <div class="m-role">Site Reliability Engineer</div>
+              <p class="m-summary">
+                Ran platform reliability for consulting-grade systems where uptime carried
+                client commitments — and learned that clear roadmaps beat heroic on-call.
+              </p>
+              <ul>
+                <li><b>Leadership through OKRs.</b> Led teams and built OKR-aligned roadmaps for platform reliability and Kubernetes deployments, making progress measurable quarter over quarter.</li>
+                <li><b>Production monitoring.</b> Managed CI/CD orchestration and production monitoring with Splunk, Prometheus, and Grafana across a demanding enterprise estate.</li>
+              </ul>
+              <div class="m-kpis">
+                <span class="m-kpi">OKR-driven leadership</span>
+                <span class="m-kpi">Splunk · Prometheus</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission" data-rv>
+            <div class="m-side">
+              <span class="m-period">AUG 2016 — AUG 2018</span>
+              <span class="m-company">G4S IT Services</span>
+              <span class="m-loc">GURGAON, INDIA</span>
+            </div>
+            <div>
+              <div class="m-role">Principal DevOps Consultant</div>
+              <p class="m-summary">
+                Consulting leadership across the DevOps group — setting the policies,
+                governance, and standards that multiple delivery teams ran on.
+              </p>
+              <ul>
+                <li><b>Standards and governance.</b> Provided leadership across the DevOps group, defining the policies, governance, and standards for CI/CD operations that outlasted my engagement.</li>
+                <li><b>High-availability infrastructure.</b> Designed and set up HA cloud infrastructure on GCP with Kubernetes, auto-scaling, and load balancing for client production systems.</li>
+              </ul>
+              <div class="m-kpis">
+                <span class="m-kpi">Org-wide standards</span>
+                <span class="m-kpi">GCP HA infrastructure</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission" data-rv>
+            <div class="m-side">
+              <span class="m-period">JAN 2011 — JUL 2016</span>
+              <span class="m-company">AON Services</span>
+              <span class="m-loc">GURGAON, INDIA</span>
+            </div>
+            <div>
+              <div class="m-role">Senior Software Engineer</div>
+              <p class="m-summary">
+                Five years supporting mission-critical enterprise applications where
+                critical-path monitoring and client delivery defined the role — the
+                foundation of everything that followed.
+              </p>
+              <ul>
+                <li><b>Mission-critical operations.</b> Handled enterprise application support, critical-path monitoring, and client implementation for mission-critical systems — with availability expectations that left no room for quiet failures.</li>
+              </ul>
+              <div class="m-kpis">
+                <span class="m-kpi">Mission-critical systems</span>
+                <span class="m-kpi">5 years enterprise</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           05 · STACK — skills + certs + education
+      ================================================================= -->
+      <section id="stack" class="section wrap">
+        <div class="section-head" data-rv>
+          <span class="kicker">05 · Stack &amp; credentials</span>
+          <h2>Tools of the trade</h2>
+        </div>
+
+        <div class="stack-grid" data-rv>
+          <div class="stack-card">
+            <h3>Platform &amp; IaC</h3>
+            <div class="tag-cloud">
+              <span class="tag">Kubernetes</span><span class="tag">Terraform</span><span class="tag">ArgoCD</span><span class="tag">Helm</span><span class="tag">GitOps</span><span class="tag">KEDA</span><span class="tag">GitHub Actions</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>Observability</h3>
+            <div class="tag-cloud">
+              <span class="tag">OpenTelemetry</span><span class="tag">Prometheus</span><span class="tag">Thanos</span><span class="tag">Grafana</span><span class="tag">ClickHouse</span><span class="tag">Vector</span><span class="tag">Fluentbit</span><span class="tag">Dynatrace</span><span class="tag">Datadog</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>Reliability</h3>
+            <div class="tag-cloud">
+              <span class="tag">SLO / SLI / Error budgets</span><span class="tag">Incident management</span><span class="tag">On-call</span><span class="tag">Capacity planning</span><span class="tag">Chaos engineering</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>Cloud</h3>
+            <div class="tag-cloud">
+              <span class="tag">AWS</span><span class="tag">GCP</span><span class="tag">Azure</span><span class="tag">Multi-cloud production</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>Languages</h3>
+            <div class="tag-cloud">
+              <span class="tag">Golang</span><span class="tag">Python</span><span class="tag">Bash</span><span class="tag">Java</span><span class="tag">Rust</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>Leadership</h3>
+            <div class="tag-cloud">
+              <span class="tag">Team leadership &amp; mentorship</span><span class="tag">Performance leadership</span><span class="tag">SLO governance</span><span class="tag">FinOps</span><span class="tag">Automation-first culture</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 44px" data-rv>
+          <div class="kicker" style="margin-bottom: 16px">Certifications — 7 current</div>
+          <div class="cert-list">
+            <div class="cert">
+              <span class="c-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div><div class="c-name">Certified Kubernetes Administrator</div><div class="c-org">CNCF · CKA</div></div>
+            </div>
+            <div class="cert">
+              <span class="c-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div><div class="c-name">Certified Kubernetes Application Developer</div><div class="c-org">CNCF · CKAD</div></div>
+            </div>
+            <div class="cert">
+              <span class="c-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div><div class="c-name">Azure Solutions Architect Expert</div><div class="c-org">MICROSOFT</div></div>
+            </div>
+            <div class="cert">
+              <span class="c-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div><div class="c-name">Azure DevOps Engineer Expert</div><div class="c-org">MICROSOFT</div></div>
+            </div>
+            <div class="cert">
+              <span class="c-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div><div class="c-name">Azure Security Engineer Associate</div><div class="c-org">MICROSOFT</div></div>
+            </div>
+            <div class="cert">
+              <span class="c-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div><div class="c-name">Azure AI Engineer Associate</div><div class="c-org">MICROSOFT</div></div>
+            </div>
+            <div class="cert">
+              <span class="c-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div><div class="c-name">Dynatrace Verified Essentials</div><div class="c-org">DYNATRACE</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 44px" data-rv>
+          <div class="kicker" style="margin-bottom: 16px">Education</div>
+          <div class="edu-grid">
+            <div class="edu">
+              <div class="e-degree">MBA, Total Quality Management</div>
+              <div class="e-school">Sikkim Manipal University</div>
+              <div class="e-year">2013 — 2015</div>
+            </div>
+            <div class="edu">
+              <div class="e-degree">B.E., Information Technology</div>
+              <div class="e-school">RGTU, Bhopal</div>
+              <div class="e-year">2005 — 2009</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           06 · CONTACT
+      ================================================================= -->
+      <section id="contact" class="section wrap" style="border-top: none;">
+        <div class="cta" data-rv>
+          <div class="cta-kicker">Open to opportunities</div>
+          <h2>Let's make your platform<br />boringly reliable.</h2>
+          <p>
+            Staff Engineer SRE and engineering-leadership roles — platform,
+            observability, reliability and cloud infrastructure. Based in Dubai,
+            open to relocation.
+          </p>
+          <div class="cta-btns">
+            <a href="mailto:jatin.kumar.ray@gmail.com?subject=Staff%20SRE%20opportunity" class="btn btn-solid">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              jatin.kumar.ray@gmail.com
+            </a>
+            <a href="https://linkedin.com/in/jatinkray" target="_blank" rel="noopener" class="btn btn-line">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 17.34V10.4H6.04v6.94h2.3zM7.19 9.4a1.34 1.34 0 1 0 0-2.68 1.34 1.34 0 0 0 0 2.68zM18 17.34v-3.8c0-2.04-.44-3.6-2.82-3.6-1.14 0-1.91.62-2.23 1.22h-.03v-1.03H10.7v6.94h2.3v-3.43c0-.9.17-1.78 1.29-1.78 1.1 0 1.12 1.03 1.12 1.84v3.37H18z"/></svg>
+              LinkedIn
+            </a>
+            <a href="public/Jatin_Kumar_Ray_CV.pdf" target="_blank" rel="noopener" class="btn btn-line">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              CV (PDF)
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+      <div class="footer-inner">
+        <span>jatin·kumar·ray — Dubai, UAE · GMT+4</span>
+        <div class="f-links">
+          <a href="https://linkedin.com/in/jatinkray" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/jatinkray" target="_blank" rel="noopener">GitHub</a>
+          <a href="public/Jatin_Kumar_Ray_CV.pdf" target="_blank" rel="noopener">CV</a>
+          <a href="https://parqtel.com" target="_blank" rel="noopener">Parqtel</a>
+          <a href="https://localsightx.github.io" target="_blank" rel="noopener">LocalSight</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============ LIGHTBOX ============ -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot viewer">
+      <button class="lb-x" aria-label="Close viewer">✕</button>
+      <img src="assets/img/shots/parqtel/metrics.jpg" alt="" id="lb-img" hidden />
+      <div class="lb-cap" id="lb-cap"></div>
+    </div>
+
+    <noscript>
+      <style>
+        [data-rv] { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
+
+    <script src="assets/js/main.js" defer></script>
+  </body>
+</html>
