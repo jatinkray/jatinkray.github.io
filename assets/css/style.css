@@ -1139,21 +1139,29 @@ html[data-theme="light"] .value-card:hover {
   font-size: 14.5px;
   color: var(--ink-mute);
   line-height: 1.7;
-  margin-bottom: 20px;
-  max-width: 620px;
+  margin-bottom: 18px;
+  max-width: 660px;
 }
+/* bullets and summary share the same text measure so the whole
+   mission block reads as one aligned column */
+.mission ul { max-width: 660px; }
 .mission ul { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-top: 4px; }
+/* NOTE: li must be block, NOT flex — flex turns the bold lead-in and the
+   paragraph text into separate flex items, injecting a gap mid-sentence
+   and breaking line-wrap alignment. Block layout lets <b> and text flow
+   as one paragraph; the marker sits in a padded gutter. */
 .mission ul li {
-  display: flex;
-  gap: 13px;
+  position: relative;
+  padding-left: 20px;
   font-size: 13.5px;
   line-height: 1.65;
   color: var(--ink-soft);
 }
 .mission ul li::before {
   content: "";
-  flex: none;
-  margin-top: 8px;
+  position: absolute;
+  left: 2px;
+  top: 7px;
   width: 5px; height: 5px;
   border-radius: 2px;
   background: var(--ops);
