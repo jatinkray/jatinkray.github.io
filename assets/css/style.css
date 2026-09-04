@@ -1031,6 +1031,14 @@ html[data-theme="light"] .moon-i { display: block; }
   padding-top: 24px;
   border-top: 1px dashed var(--line);
 }
+/* case-stack now sits in the banner's right column, beside the tagline:
+   drop the separator, centre against the tagline column */
+.case-banner .case-stack {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  align-content: center;
+}
 /* dynamic tag cloud: on large viewports the tags drift gently like a
    live word-cloud; on mobile (and reduced-motion) they stay static */
 @media (min-width: 960px) and (prefers-reduced-motion: no-preference) {
