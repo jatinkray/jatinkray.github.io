@@ -32,8 +32,38 @@
       "uptime --since 2011 --calls 1B",
       "optimus prime --cost -2M",
     ];
+    var typeLine = typedEl.closest(".type-line");
+    var promptEl = typeLine ? typeLine.querySelector(".prompt") : null;
+    var cursorEl = typeLine ? typeLine.querySelector(".cursor") : null;
+
+    /* Adaptive fit: after every keystroke, shrink the line's font-size
+       until prompt + typed text + cursor all fit inside the line box.
+       Guarantees the last letter is never trimmed regardless of font
+       fallback metrics, subpixel rounding, zoom or viewport width.
+       Re-measures on resize so a rotated tablet re-fits. */
+    var fit = function () {
+      if (!typeLine) return;
+      // clear any prior shrink so the base comes fresh from CSS
+      // (14px desktop / 11.5px / 10px mobile via media queries)
+      typeLine.style.fontSize = "";
+      var size = parseFloat(getComputedStyle(typeLine).fontSize);
+      var lineW = typeLine.clientWidth;
+      var promptW = promptEl ? promptEl.getBoundingClientRect().width : 0;
+      var promptM = promptEl ? (parseFloat(getComputedStyle(promptEl).marginRight) || 0) : 0;
+      var cursorW = cursorEl ? cursorEl.getBoundingClientRect().width : 0;
+      var avail = lineW - promptW - promptM - cursorW - 4; // 4px safety
+      var textW = typedEl.getBoundingClientRect().width;
+      var guard = 0;
+      while (textW > avail && size > 7 && guard++ < 60) {
+        size -= 0.25;
+        typeLine.style.fontSize = size.toFixed(2) + "px";
+        textW = typedEl.getBoundingClientRect().width;
+      }
+    };
+
     if (reduce) {
       typedEl.textContent = phrases[0];
+      fit();
     } else {
       var pi = 0, ci = 0, deleting = false;
       var tick = function () {
@@ -43,6 +73,7 @@
           if (ci === phrase.length) {
             deleting = true;
             setTimeout(tick, 1900);
+            fit(); // cursor follows the complete phrase for its dwell
             return;
           }
         } else {
@@ -53,10 +84,12 @@
           }
         }
         typedEl.textContent = phrase.slice(0, ci);
+        fit();
         setTimeout(tick, deleting ? 22 : 55);
       };
       tick();
     }
+    window.addEventListener("resize", fit);
   }
 
   /* ---------- count-up ---------- */
