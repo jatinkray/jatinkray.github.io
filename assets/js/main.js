@@ -1,470 +1,248 @@
 /* ============================================================
-   JATIN KUMAR RAY — "The Reliability Report" interactions
-   typing · theme · reveal · counters · meters · dial ·
-   scrollspy · tabs · lightbox
+   Jatin Kumar Ray · interactions
+   theme · incident replay · galleries · lightbox · scrollspy ·
+   reveal · copy email. No dependencies.
    ============================================================ */
 (function () {
   "use strict";
+  var doc = document.documentElement;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasIO = "IntersectionObserver" in window;
+  var each = function (sel, fn, root) {
+    Array.prototype.forEach.call((root || document).querySelectorAll(sel), fn);
+  };
 
   /* ---------- theme ---------- */
-  var btn = document.getElementById("theme-toggle");
-  if (btn) {
-    btn.addEventListener("click", function () {
-      var isLight =
-        document.documentElement.getAttribute("data-theme") === "light";
-      if (isLight) {
-        document.documentElement.removeAttribute("data-theme");
-        try { localStorage.setItem("theme", "dark"); } catch (e) {}
-      } else {
-        document.documentElement.setAttribute("data-theme", "light");
-        try { localStorage.setItem("theme", "light"); } catch (e) {}
-      }
+  var themeBtn = document.getElementById("theme");
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var syncTheme = function () {
+    var light = doc.getAttribute("data-theme") === "light";
+    if (themeBtn) themeBtn.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+    if (themeMeta) themeMeta.setAttribute("content", light ? "#f5f3ef" : "#0b0c0e");
+  };
+  if (themeBtn) {
+    themeBtn.addEventListener("click", function () {
+      var light = doc.getAttribute("data-theme") === "light";
+      if (light) doc.removeAttribute("data-theme");
+      else doc.setAttribute("data-theme", "light");
+      try { localStorage.setItem("theme", light ? "dark" : "light"); } catch (e) {}
+      syncTheme();
     });
   }
+  syncTheme();
 
-  /* ---------- typing effect ---------- */
-  var typedEl = document.getElementById("typed");
-  if (typedEl) {
-    var phrases = [
-      "whoami --role staff-sre",
-      "kubectl get platforms -o wide",
-      "uptime --since 2011 --calls 1B",
-      "optimus prime --cost -2M",
-    ];
-    var typeLine = typedEl.closest(".type-line");
-    var promptEl = typeLine ? typeLine.querySelector(".prompt") : null;
-    var cursorEl = typeLine ? typeLine.querySelector(".cursor") : null;
-
-    /* Adaptive fit: after every keystroke, shrink the line's font-size
-       until prompt + typed text + cursor all fit inside the line box.
-       Guarantees the last letter is never trimmed regardless of font
-       fallback metrics, subpixel rounding, zoom or viewport width.
-       Re-measures on resize so a rotated tablet re-fits. */
-    var fit = function () {
-      if (!typeLine) return;
-      // clear any prior shrink so the base comes fresh from CSS
-      // (14px desktop / 11.5px / 10px mobile via media queries)
-      typeLine.style.fontSize = "";
-      var size = parseFloat(getComputedStyle(typeLine).fontSize);
-      var lineW = typeLine.clientWidth;
-      var promptW = promptEl ? promptEl.getBoundingClientRect().width : 0;
-      var promptM = promptEl ? (parseFloat(getComputedStyle(promptEl).marginRight) || 0) : 0;
-      var cursorW = cursorEl ? cursorEl.getBoundingClientRect().width : 0;
-      var avail = lineW - promptW - promptM - cursorW - 4; // 4px safety
-      var textW = typedEl.getBoundingClientRect().width;
-      var guard = 0;
-      while (textW > avail && size > 7 && guard++ < 60) {
-        size -= 0.25;
-        typeLine.style.fontSize = size.toFixed(2) + "px";
-        textW = typedEl.getBoundingClientRect().width;
-      }
+  /* ---------- incident replay ----------
+     Each log row carries data-t (replay second it appears), data-p (chart
+     progress 0–1 at that moment) and data-state (drives colours via CSS).
+     Without JS the figure shows its final, fully readable state.          */
+  var fig = document.getElementById("replay");
+  if (fig) {
+    var steps = Array.prototype.slice.call(fig.querySelectorAll(".rp-log li"));
+    var btn = fig.querySelector(".rp-btn");
+    var btnUse = btn.querySelector("use");
+    var statusT = fig.querySelector(".rp-status-t");
+    var LABEL = {
+      firing: "Firing", investigating: "Investigating", approval: "Needs approval",
+      mitigating: "Mitigating", resolved: "Resolved",
     };
+    var END = 22; // seconds
+    var keys = steps.map(function (li) { return { t: +li.dataset.t, p: +li.dataset.p }; });
+    keys.push({ t: END, p: 1 });
 
-    if (reduce) {
-      typedEl.textContent = phrases[0];
-      fit();
-    } else {
-      var pi = 0, ci = 0, deleting = false;
-      var tick = function () {
-        var phrase = phrases[pi];
-        if (!deleting) {
-          ci++;
-          if (ci === phrase.length) {
-            deleting = true;
-            setTimeout(tick, 1900);
-            fit(); // cursor follows the complete phrase for its dwell
-            return;
-          }
-        } else {
-          ci--;
-          if (ci === 0) {
-            deleting = false;
-            pi = (pi + 1) % phrases.length;
-          }
+    var t = 0, last = 0, raf = 0, shown = -2;
+    var playing = false, ended = true, userPaused = false, autoplayed = false;
+
+    var progressAt = function (time) {
+      for (var i = keys.length - 1; i >= 0; i--) {
+        if (time >= keys[i].t) {
+          var a = keys[i], b = keys[i + 1];
+          if (!b || reduce) return a.p; // reduced motion: jump, don't glide
+          return a.p + (b.p - a.p) * ((time - a.t) / (b.t - a.t));
         }
-        typedEl.textContent = phrase.slice(0, ci);
-        fit();
-        setTimeout(tick, deleting ? 22 : 55);
-      };
-      tick();
-    }
-    window.addEventListener("resize", fit);
-  }
-
-  /* ---------- count-up ---------- */
-  function fmt(val, decimals) {
-    var n = decimals > 0 ? val.toFixed(decimals) : Math.round(val).toString();
-    var parts = n.split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-  }
-  function runCount(el) {
-    if (el.dataset.done) return;
-    el.dataset.done = "1";
-    var raw = el.dataset.raw;
-    if (raw && raw !== "undefined" && raw !== "") {
-      el.textContent = raw;
-      return;
-    }
-    var to = parseFloat(el.dataset.to);
-    if (isNaN(to)) return;
-    var decimals = parseInt(el.dataset.decimals || "0", 10);
-    var prefix = el.dataset.prefix && el.dataset.prefix !== "undefined" ? el.dataset.prefix : "";
-    var suffix = el.dataset.suffix && el.dataset.suffix !== "undefined" ? el.dataset.suffix : "";
-    if (reduce) {
-      el.textContent = prefix + fmt(to, decimals) + suffix;
-      return;
-    }
-    var dur = 1400;
-    var start = performance.now();
-    var step = function (now) {
-      var t = Math.min(1, (now - start) / dur);
-      var e = 1 - Math.pow(1 - t, 3);
-      el.textContent = prefix + fmt(to * e, decimals) + suffix;
-      if (t < 1) requestAnimationFrame(step);
-      else el.textContent = prefix + fmt(to, decimals) + suffix;
+      }
+      return keys[0].p;
     };
-    requestAnimationFrame(step);
+
+    var render = function () {
+      fig.style.setProperty("--p", progressAt(t).toFixed(4));
+      var n = -1;
+      for (var i = 0; i < steps.length; i++) if (t >= keys[i].t) n = i;
+      if (n === shown) return;
+      shown = n;
+      steps.forEach(function (li, i) {
+        li.classList.toggle("on", i <= n);
+        li.classList.toggle("latest", i === n && !ended);
+      });
+      var state = n >= 0 ? steps[n].dataset.state : "firing";
+      fig.setAttribute("data-state", state);
+      statusT.textContent = LABEL[state];
+    };
+
+    var setBtn = function (kind) {
+      var map = {
+        pause: ["#i-pause", "Pause the replay"],
+        play: ["#i-play", "Play the replay"],
+        replay: ["#i-replay", "Replay the incident"],
+      };
+      btnUse.setAttribute("href", map[kind][0]);
+      btn.setAttribute("aria-label", map[kind][1]);
+    };
+
+    var arm = function () {
+      t = 0; shown = -2; ended = false;
+      fig.classList.remove("static");
+      fig.classList.add("armed", "is-live");
+      render();
+      setBtn("play");
+    };
+
+    var finish = function () {
+      playing = false; ended = true;
+      fig.classList.remove("is-live");
+      steps.forEach(function (li) { li.classList.remove("latest"); });
+      setBtn("replay");
+    };
+
+    var frame = function (now) {
+      raf = 0;
+      if (!playing) return;
+      t += Math.min(0.1, (now - last) / 1000); // clamp long frames (tab switch)
+      last = now;
+      if (t >= END) { t = END; render(); finish(); return; }
+      render();
+      raf = requestAnimationFrame(frame);
+    };
+
+    var play = function () {
+      if (playing) return;
+      if (ended) arm();
+      playing = true;
+      last = performance.now();
+      setBtn("pause");
+      raf = requestAnimationFrame(frame);
+    };
+
+    var pause = function () {
+      playing = false;
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      if (!ended) setBtn("play");
+    };
+
+    btn.hidden = false;
+    btn.addEventListener("click", function () {
+      if (playing) { userPaused = true; pause(); }
+      else { userPaused = false; play(); }
+    });
+
+    if (reduce || !hasIO) {
+      fig.classList.add("static"); // final state; the button replays on demand
+      setBtn("replay");
+    } else {
+      arm(); // first frame: only the alert is visible
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          if (!autoplayed) { autoplayed = true; play(); }
+          else if (!ended && !playing && !userPaused) play();
+        } else if (playing) {
+          pause(); // offscreen: stop the clock, resume when visible again
+        }
+      }, { threshold: 0.35 }).observe(fig);
+    }
   }
 
-  /* ---------- meters + dial ---------- */
-  function fillMeter(el) {
-    if (el.dataset.done) return;
-    el.dataset.done = "1";
-    el.style.width = (el.dataset.fill || 0) + "%";
+  /* ---------- screenshot galleries ---------- */
+  var lb = document.getElementById("lb");
+  var lbImg = document.getElementById("lb-img");
+  var lbCap = document.getElementById("lb-cap");
+  var openLb = function (src, alt, caption) {
+    if (!lb || typeof lb.showModal !== "function") {
+      window.open(src, "_blank", "noopener");
+      return;
+    }
+    lbImg.src = src;
+    lbImg.alt = alt;
+    lbCap.textContent = caption;
+    lb.showModal();
+  };
+  if (lb) {
+    lb.querySelector(".lb-x").addEventListener("click", function () { lb.close(); });
+    lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });
   }
-  function fillDial(el) {
-    if (!el || el.dataset.done) return;
-    el.dataset.done = "1";
-    var pct = 0.995;
-    var full = parseFloat(el.getAttribute("stroke-dasharray"));
-    el.style.strokeDashoffset = String(full * (1 - pct));
+
+  each(".gallery", function (g) {
+    var frameBtn = g.querySelector(".g-frame");
+    var img = frameBtn.querySelector("img");
+    var cap = g.querySelector(".g-cap");
+    var tabs = g.querySelectorAll(".g-tab");
+    each(".g-tab", function (tab) {
+      tab.addEventListener("click", function () {
+        Array.prototype.forEach.call(tabs, function (x) {
+          x.setAttribute("aria-pressed", String(x === tab));
+        });
+        img.src = tab.dataset.src;
+        img.alt = tab.dataset.alt;
+        cap.textContent = tab.dataset.cap;
+        frameBtn.setAttribute("aria-label", "Enlarge screenshot: " + tab.dataset.cap);
+      });
+    }, g);
+    frameBtn.addEventListener("click", function () {
+      openLb(img.currentSrc || img.src, img.alt, cap.textContent);
+    });
+  });
+
+  /* ---------- scrollspy for the top nav ---------- */
+  var links = {};
+  each(".nav a", function (a) { links[a.getAttribute("href").slice(1)] = a; });
+  if (hasIO && Object.keys(links).length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        Object.keys(links).forEach(function (id) {
+          var on = id === en.target.id;
+          links[id].classList.toggle("active", on);
+          if (on) links[id].setAttribute("aria-current", "true");
+          else links[id].removeAttribute("aria-current");
+        });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    each("main section[id]", function (s) { spy.observe(s); });
   }
 
   /* ---------- reveal on scroll ---------- */
-  var rvHandler = function (entries, io) {
-    entries.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      var el = en.target;
-      el.classList.add("in");
-      el.querySelectorAll(".count").forEach(function (c) {
-        setTimeout(function () { runCount(c); }, 120);
+  if (!reduce && hasIO) {
+    doc.classList.add("rv");
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("in");
+        rio.unobserve(en.target);
       });
-      el.querySelectorAll(".m-fill").forEach(function (m) {
-        setTimeout(function () { fillMeter(m); }, 150);
-      });
-      var d = el.querySelector(".dial-arc");
-      if (d) fillDial(d);
-      io.unobserve(el);
-    });
-  };
-
-  if (reduce) {
-    document.querySelectorAll("[data-rv]").forEach(function (el) {
-      el.classList.add("in");
-    });
-    document.querySelectorAll(".count").forEach(runCount);
-    document.querySelectorAll(".m-fill").forEach(fillMeter);
-    fillDial(document.querySelector(".dial-arc"));
-  } else {
-    var io = new IntersectionObserver(rvHandler, {
-      threshold: 0.15,
-      rootMargin: "0px 0px -6% 0px",
-    });
-    document.querySelectorAll("[data-rv]").forEach(function (el) {
-      io.observe(el);
-    });
+    }, { threshold: 0, rootMargin: "0px 0px -10% 0px" });
+    each("[data-reveal]", function (el) { rio.observe(el); });
   }
 
-  /* ---------- scrollspy (side nav) ---------- */
-  var navLinks = document.querySelectorAll(".side-nav a");
-  if (navLinks.length && "IntersectionObserver" in window) {
-    var sections = document.querySelectorAll(
-      "#report, #signals, #capabilities, #products, #mission, #stack, #contact"
-    );
-    var spy = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) {
-            navLinks.forEach(function (a) {
-              a.classList.toggle(
-                "active",
-                a.getAttribute("data-sec") === en.target.id
-              );
-            });
-          }
-        });
-      },
-      { rootMargin: "-30% 0px -60% 0px" }
-    );
-    sections.forEach(function (s) { spy.observe(s); });
-  }
-
-  /* ---------- case tabs + auto-rotating carousel ---------- */
-  var ROTATE_MS = 5000;
-  document.querySelectorAll(".case-tabs").forEach(function (tabs) {
-    var caseEl = tabs.closest(".case");
-    var frame = caseEl ? caseEl.querySelector(".case-frame") : null;
-    var img = frame ? frame.querySelector("img") : null;
-    var tabEls = tabs.querySelectorAll(".case-tab");
-    var timer = null;
-    var idx = 0;
-
-    var show = function (i) {
-      var tab = tabEls[i];
-      if (!tab) return;
-      tabs.querySelectorAll(".case-tab").forEach(function (t) {
-        t.classList.remove("active");
-      });
-      // restart the progress bar animation
-      tab.classList.add("active");
-      if (frame && img) {
-        img.src = tab.dataset.shot;
-        img.alt = tab.dataset.cap;
-        frame.dataset.zoom = tab.dataset.shot;
-        frame.dataset.cap = tab.dataset.cap;
-      }
-    };
-
-    var next = function () {
-      idx = (idx + 1) % tabEls.length;
-      show(idx);
-    };
-
-    var start = function () {
-      if (reduce || tabEls.length < 2) return;
-      stop();
-      tabs.classList.remove("paused");
-      timer = setInterval(next, ROTATE_MS);
-    };
-    var stop = function () {
-      if (timer) { clearInterval(timer); timer = null; }
-      tabs.classList.add("paused");
-    };
-
-    tabEls.forEach(function (tab, i) {
-      tab.addEventListener("click", function () {
-        idx = i;
-        show(idx);
-        // manual choice: pause rotation for a while, then resume
-        stop();
-        clearTimeout(tab._resume);
-        tab._resume = setTimeout(start, 12000);
-      });
-    });
-
-    // pause on hover anywhere over the gallery
-    var body = caseEl ? caseEl.querySelector(".case-body") : tabs.parentElement;
-    if (body) {
-      body.addEventListener("mouseenter", stop);
-      body.addEventListener("mouseleave", start);
-    }
-
-    // only rotate while the gallery is actually on screen
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) start(); else stop();
-        });
-      }, { threshold: 0.25 });
-      io.observe(frame || tabs);
-    } else {
-      start();
-    }
-  });
-
-  /* ---------- lightbox ---------- */
-  var lb = document.getElementById("lightbox");
-  var lbImg = document.getElementById("lb-img");
-  var lbCap = document.getElementById("lb-cap");
-  var lbX = lb ? lb.querySelector(".lb-x") : null;
-
-  function openLb(src, cap) {
-    if (!lb || !src) return;
-    lbImg.hidden = false;
-    lbImg.src = src;
-    lbImg.alt = cap || "";
-    lbCap.textContent = cap || "";
-    lb.classList.add("open");
-    lb.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-    if (lbX) lbX.focus();
-  }
-  function closeLb() {
-    if (!lb) return;
-    lb.classList.remove("open");
-    lb.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-    lbImg.hidden = true;
-  }
-
-  document.querySelectorAll(".case-frame").forEach(function (frame) {
-    var open = function () { openLb(frame.dataset.zoom, frame.dataset.cap); };
-    frame.addEventListener("click", open);
-    frame.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        open();
+  /* ---------- copy email ---------- */
+  each("[data-copy]", function (b) {
+    var msg = b.parentElement.querySelector(".copy-msg");
+    var use = b.querySelector("use");
+    b.addEventListener("click", function () {
+      var done = function (ok) {
+        if (msg) msg.textContent = ok ? "Copied" : "Copy failed";
+        use.setAttribute("href", ok ? "#i-check" : "#i-copy");
+        clearTimeout(b._t);
+        b._t = setTimeout(function () {
+          if (msg) msg.textContent = "";
+          use.setAttribute("href", "#i-copy");
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(b.dataset.copy).then(
+          function () { done(true); },
+          function () { done(false); }
+        );
+      } else {
+        done(false);
       }
     });
   });
-  if (lb) {
-    lb.addEventListener("click", closeLb);
-    lbX.addEventListener("click", function (e) {
-      e.stopPropagation();
-      closeLb();
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeLb();
-    });
-  }
-
-  /* ---------- dynamic background: telemetry mesh ----------
-     A drifting constellation of service-nodes linked by faint edges,
-     with data pulses travelling between them — reads as an
-     AI/neural lattice and an SRE distributed-trace map at once.
-     Skipped entirely under prefers-reduced-motion.               */
-  var meshCanvas = document.getElementById("bgMesh");
-  if (meshCanvas && !reduce) {
-    var mctx = meshCanvas.getContext("2d");
-    var nodes = [], pulses = [];
-    var DPR = Math.min(window.devicePixelRatio || 1, 2);
-
-    var resize = function () {
-      meshCanvas.width = window.innerWidth * DPR;
-      meshCanvas.height = window.innerHeight * DPR;
-      buildNodes();
-    };
-
-    var buildNodes = function () {
-      // density scales with viewport area, capped for perf
-      var count = Math.min(Math.round((window.innerWidth * window.innerHeight) / 24000), 96);
-      nodes = [];
-      for (var i = 0; i < count; i++) {
-        nodes.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          vx: (Math.random() - 0.5) * 0.16,
-          vy: (Math.random() - 0.5) * 0.16,
-          r: Math.random() * 1.6 + 0.7,
-          tw: Math.random() * Math.PI * 2, // twinkle phase
-        });
-      }
-      pulses = [];
-    };
-
-    var isLight = function () {
-      return document.documentElement.getAttribute("data-theme") === "light";
-    };
-
-    var spawnPulse = function (a, b) {
-      pulses.push({ a: a, b: b, t: 0, speed: 0.006 + Math.random() * 0.007 });
-    };
-
-    var LINK_DIST = 160;
-    var lastSpawn = 0;
-
-    var drawMesh = function (ts) {
-      var W = window.innerWidth, H = window.innerHeight;
-      mctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      mctx.clearRect(0, 0, W, H);
-      var light = isLight();
-
-      // palette (rgba strings resolved once per frame)
-      var nodeCol = light ? "10,110,80" : "52,199,123";    // ops emerald
-      var linkCol  = light ? "10,110,80" : "52,199,123";
-      var pulseCol = light ? "8,125,85" : "110,231,183";   // bright emerald
-      var goldCol  = "234,179,8";                           // rare gold pulse
-
-      // move nodes
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        n.x += n.vx; n.y += n.vy; n.tw += 0.012;
-        if (n.x < -20) n.x = W + 20;
-        if (n.x > W + 20) n.x = -20;
-        if (n.y < -20) n.y = H + 20;
-        if (n.y > H + 20) n.y = -20;
-      }
-
-      // edges
-      for (var a = 0; a < nodes.length; a++) {
-        for (var b = a + 1; b < nodes.length; b++) {
-          var dx = nodes[a].x - nodes[b].x;
-          var dy = nodes[a].y - nodes[b].y;
-          if (dx > LINK_DIST || dx < -LINK_DIST || dy > LINK_DIST || dy < -LINK_DIST) continue;
-          var d = Math.sqrt(dx * dx + dy * dy);
-          if (d < LINK_DIST) {
-            var alpha = (1 - d / LINK_DIST) * (light ? 0.16 : 0.15);
-            mctx.strokeStyle = "rgba(" + linkCol + "," + alpha.toFixed(3) + ")";
-            mctx.lineWidth = 1;
-            mctx.beginPath();
-            mctx.moveTo(nodes[a].x, nodes[a].y);
-            mctx.lineTo(nodes[b].x, nodes[b].y);
-            mctx.stroke();
-          }
-        }
-      }
-
-      // nodes (soft twinkle)
-      for (var k = 0; k < nodes.length; k++) {
-        var m = nodes[k];
-        var tw = 0.55 + 0.45 * Math.sin(m.tw);
-        mctx.fillStyle = "rgba(" + nodeCol + "," + ((light ? 0.55 : 0.65) * tw).toFixed(3) + ")";
-        mctx.beginPath();
-        mctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-        mctx.fill();
-      }
-
-      // pulses: spawn on a random close pair every ~450ms
-      if (ts - lastSpawn > 450 && nodes.length > 1) {
-        lastSpawn = ts;
-        var sa = nodes[Math.floor(Math.random() * nodes.length)];
-        var best = null, bestD = Infinity;
-        for (var j = 0; j < nodes.length; j++) {
-          var o = nodes[j];
-          if (o === sa) continue;
-          var ddx = sa.x - o.x, ddy = sa.y - o.y;
-          var dd = ddx * ddx + ddy * ddy;
-          if (dd < bestD) { bestD = dd; best = o; }
-        }
-        if (best && Math.sqrt(bestD) < LINK_DIST * 1.6) {
-          spawnPulse(sa, best);
-          if (Math.random() < 0.16) spawnPulse(best, sa); // occasional round-trip
-        }
-      }
-
-      // draw pulses
-      for (var p = pulses.length - 1; p >= 0; p--) {
-        var pl = pulses[p];
-        pl.t += pl.speed;
-        if (pl.t >= 1) { pulses.splice(p, 1); continue; }
-        // nodes keep drifting — re-interpolate live positions
-        var x = pl.a.x + (pl.b.x - pl.a.x) * pl.t;
-        var y = pl.a.y + (pl.b.y - pl.a.y) * pl.t;
-        var fade = Math.sin(pl.t * Math.PI); // ease in/out
-        // short trailing line
-        var tTail = Math.max(0, pl.t - 0.12);
-        var tx = pl.a.x + (pl.b.x - pl.a.x) * tTail;
-        var ty = pl.a.y + (pl.b.y - pl.a.y) * tTail;
-        mctx.strokeStyle = "rgba(" + pulseCol + "," + (0.5 * fade).toFixed(3) + ")";
-        mctx.lineWidth = 1.4;
-        mctx.beginPath();
-        mctx.moveTo(tx, ty);
-        mctx.lineTo(x, y);
-        mctx.stroke();
-        // bright head
-        mctx.fillStyle = "rgba(" + pulseCol + "," + (0.9 * fade).toFixed(3) + ")";
-        mctx.beginPath();
-        mctx.arc(x, y, 1.8, 0, Math.PI * 2);
-        mctx.fill();
-      }
-
-      requestAnimationFrame(drawMesh);
-    };
-
-    resize();
-    window.addEventListener("resize", resize);
-    requestAnimationFrame(drawMesh);
-  }
 })();

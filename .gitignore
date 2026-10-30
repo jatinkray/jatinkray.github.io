@@ -8,3 +8,8 @@ Thumbs.db
 
 # Extracted text (source of truth is the PDF)
 cv.txt
+
+# local design explorations — never publish
+redesign-a/
+redesign-b/
+redesign-c/
