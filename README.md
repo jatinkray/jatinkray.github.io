@@ -1,101 +1,78 @@
 # jatinkray.github.io
 
-Personal portfolio & résumé site for **Jatin Kumar Ray** — Staff Engineer, SRE &
-Platform Leadership (Dubai, UAE).
+Personal site for **Jatin Kumar Ray**, Staff SRE · Observability · AIOps (Dubai, UAE).
+Served by GitHub Pages from `main` at <https://jatinkray.github.io/>.
 
-Served by GitHub Pages from the `main` branch at
-<https://jatinkray.github.io/>.
+## Design
 
-## Design concept — "The Reliability Report"
+- **Pitch:** reliability at scale (1B+ API calls/day, $2M/yr cost cut, −70% MTTR) plus
+  AI-native operations: agents investigate over MCP, humans approve changes.
+- **Hero:** a simulated incident replay. An alert fires, an agent queries metrics, logs,
+  traces and deploys, proposes a rollback, waits for human approval, and the p99 chart
+  recovers. It is labelled *Simulated*, autoplays once when visible, can be paused, and
+  shows its final state without JavaScript or with reduced motion.
+- **Look:** ink and paper with one signal colour (vermilion), hairline Swiss grid.
+  Mona Sans (variable weight and width) for text, JetBrains Mono for data. Dark by
+  default, light theme via the toggle or the OS setting.
 
-The page is designed as a modern **ops report of the candidate**: a terminal-style
-hero console, live-uptime status cards, an impact bento grid, SLO-style capability
-meters, case-study build panels, and a mission-log career timeline. Type system is
-Space Grotesk (display) + Inter (body) + JetBrains Mono (data); palette is
-emerald-ops on deep graphite with gold signal highlights. Dark-first with a light
-theme toggle. No phone number appears anywhere on the page by design.
-
-## What's on the page
+## Sections
 
 | Section | Content |
 |---------|---------|
-| **00 · Hero console** | Terminal-style `whoami` card with typing animation, KPI summary, CV/LinkedIn CTAs; status stack with Live Systems uptime card, 1B+ calls/day sparkline, and a 99.5% availability dial |
-| **01 · Signals** | Impact bento: 14+ yrs · 1B+ calls/day · $2M/yr savings · 500 nodes; animated capability meters (K8s, observability, SLO governance, leadership); operating principles; multi-cloud tags |
-| **02 · Capabilities** | Six staff-level value propositions: platform building, engineering leadership, reliability governance, FinOps, AI-native operations (MCP), builder's track record |
-| **03 · Builds** | Case studies for two live open-source products (below) with tabbed console screenshots, custom SVG architecture diagrams, benchmark KPIs, and fact cards |
-| **04 · Mission log** | Six-role career timeline: Careem → Hungerstation → Carrefour → McKinsey → G4S → AON, each with achievements and impact chips |
-| **05 · Stack & credentials** | Skills tags (Platform, Observability, Reliability, Cloud, Languages, Leadership), 7 certifications, education |
-| **06 · Contact** | Email + LinkedIn + CV CTA card |
+| Hero | Name, positioning, CTAs, four headline results with their source, incident replay |
+| Companies | Careem (Uber), HungerStation, Carrefour, McKinsey, G4S, Aon |
+| 01 · Scope | Six staff-level areas, each with a principle and where it happened |
+| 02 · AIOps | Five-layer stack (Data → Signal → Context → Reason → Act) and the rules agents follow |
+| 03 · Builds | Parqtel and LocalSight: KPIs, highlights, screenshot galleries with a lightbox |
+| 04 · Experience | Seven roles, newest first |
+| 05 · Toolkit | Skills, certifications, education |
+| 06 · Contact | Email (with copy button), LinkedIn, GitHub, CV |
 
-### Portfolio products
-
-1. **Parqtel** — ultra-lightweight Rust observability engine; OTLP metrics/logs/traces
-   → compressed Parquet with PromQL-compatible query API, Grafana datasource, alerting,
-   and 7 MCP tool-servers for AI incident response.
-   Site: <https://parqtel.com> · Source: <https://github.com/parqtel/parqtel-oss>
-
-2. **LocalSight** — local-first, privacy-by-design AI video intelligence platform for
-   NVR/IP-camera fleets; local ONNX inference, behavior analytics, ANPR, envelope
-   encryption, hardened CI/CD.
-   Site: <https://localsightx.github.io> · Source: <https://github.com/localsightX/localsight>
+Every number on the page comes from the CV (`public/Jatin_Kumar_Ray_CV.pdf`) or the
+public Parqtel and LocalSight repos. No phone number appears on the page.
 
 ## Structure
 
 ```
 .
-├── index.html                    # The entire one-page site
-├── public/Jatin_Kumar_Ray_CV.pdf # Downloadable résumé
+├── index.html                     # the whole site
+├── public/Jatin_Kumar_Ray_CV.pdf  # downloadable CV
 ├── assets/
-│   ├── css/style.css             # Design system (dark + light themes)
-│   ├── js/main.js                # Typing, theme, reveals, counters, meters, dial,
-│   │                             #   scrollspy, tabs, lightbox
-│   ├── fonts/                    # Space Grotesk + Inter + JetBrains Mono (self-hosted)
-│   └── img/
-│       ├── favicon.svg           # Heartbeat brand mark
-│       ├── og-image.png          # 1200×630 social card
-│       └── shots/                # Product console screenshots (optimized JPEG)
+│   ├── css/style.css              # tokens (dark + light), layout, replay
+│   ├── js/main.js                 # theme, replay, galleries, lightbox, scrollspy, reveal, copy
+│   ├── fonts/                     # Mona Sans + JetBrains Mono (self-hosted woff2)
+│   └── img/                       # favicon, og-image.png (1200×630), product screenshots
 └── scripts/
-    ├── review.cjs                # Puppeteer local-review (screenshots + checks)
-    └── og-src.html               # Source used to render the OG image
+    ├── review.cjs                 # Puppeteer review: screenshots + 28 checks
+    └── og-src.html                # source for og-image.png
 ```
 
-## Design notes
+No build step and no external requests: plain HTML, CSS and JS with relative paths.
 
-- **No build step** — plain HTML/CSS/JS, served statically (`.nojekyll` present).
-  Asset paths are relative so the page also works from the filesystem or a subpath.
-- **Dark-first, light toggle** — tokens follow the system theme; the header button
-  persists the user's choice in `localStorage`.
-- **Self-hosted fonts** — no external requests; fully functional offline/air-gapped.
-- **Accessible** — focus-visible styles, ARIA labels, `prefers-reduced-motion`
-  disables all animation (typing, reveals, flows, counters), keyboard-operable
-  lightbox, unique H1, semantic landmarks.
-- **Mobile-safe** — architecture diagrams scroll horizontally inside their panels;
-  the page never overflows horizontally on 390px viewports.
-- **SEO** — canonical URL, OG/Twitter cards, Person JSON-LD with `sameAs` links.
-
-## Local preview
+## Local preview and review
 
 ```bash
-python3 -m http.server 8899
-# open http://localhost:8899
+python3 -m http.server 8899           # from the repo root, then open http://127.0.0.1:8899
+node scripts/review.cjs               # screenshots to .review/, exits 1 if a check fails
+node scripts/review.cjs --og          # re-render assets/img/og-image.png
 ```
 
-Full automated review (desktop/mobile screenshots, console-error capture,
-interaction tests, overflow checks):
-
-```bash
-node scripts/review.cjs   # needs the local server running + system Chrome
-```
+The review checks overflow at 320–1440 px, heading and link structure, alt text,
+contrast of every text colour token in both themes, the replay (autoplay, approval gate,
+pause, end state), theme toggle, gallery tabs, lightbox, scrollspy, copy email,
+no-JS and reduced-motion rendering, and console errors. It needs Puppeteer and a local
+Chrome; set `PUPPETEER`, `CHROME` or `BASE` to override the defaults.
 
 ## Editing
 
-- All content lives in `index.html` — metrics in the bento, KPIs in the case
-  banners, missions in the log. Search for the section you want to change.
-- Colors/typography: CSS custom properties at the top of `assets/css/style.css`
-  (`--ops` is the emerald accent; `--gold` is the signal highlight).
-- Screenshots: replace JPEGs under `assets/img/shots/` (keep ~1360px width).
+- **Copy and numbers:** all in `index.html`. Search for the section id (`#scope`,
+  `#aiops`, `#builds`, `#experience`).
+- **Replay script:** the `.rp-log` list in `index.html`. Each row has `data-t` (second it
+  appears), `data-p` (chart progress 0–1) and `data-state` (`firing`, `investigating`,
+  `approval`, `mitigating`, `resolved`). The run length is `END` in `assets/js/main.js`.
+- **Colours and type:** tokens at the top of `assets/css/style.css`.
+- **Screenshots:** JPEGs under `assets/img/shots/` at 16:10 (about 1400 px wide).
 
 ## Deployment
 
-Push to `main`. GitHub Pages serves the root; the PDF is served from `public/`.
-No CI required.
+Push to `main`. GitHub Pages serves the repo root (`.nojekyll` is present).

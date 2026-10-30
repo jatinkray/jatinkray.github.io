@@ -1,109 +1,89 @@
 <!doctype html>
+<!-- Source for assets/img/og-image.png (1200x630).
+     Render: serve the repo root, open /scripts/og-src.html at 1200x630, screenshot. -->
 <html>
 <head>
 <meta charset="utf-8">
 <style>
   @font-face {
-    font-family: "Space Grotesk";
-    font-style: normal;
-    font-weight: 300 700;
-    src: url("../fonts/SpaceGrotesk.woff2") format("woff2-variations");
+    font-family: "Mona Sans";
+    src: url("../assets/fonts/MonaSans.woff2") format("woff2");
+    font-weight: 200 900;
+    font-stretch: 75% 125%;
   }
   @font-face {
     font-family: "JetBrains Mono";
-    font-style: normal;
+    src: url("../assets/fonts/JetBrainsMono.woff2") format("woff2");
     font-weight: 400 600;
-    src: url("../fonts/JetBrainsMono.woff2") format("woff2-variations");
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
-    font-family: "Space Grotesk", sans-serif;
-    background: #0b0d0e;
-    color: #eceff1;
     position: relative;
+    background: #0b0c0e;
+    color: #f3f1ec;
+    font-family: "Mona Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  .amb {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(700px 380px at 85% -5%, rgba(52,211,153,0.10), transparent 70%),
-      radial-gradient(500px 300px at 0% 100%, rgba(125,211,252,0.05), transparent 70%);
+  .dots {
+    position: absolute; inset: 0 0 0 40%;
+    background-image: radial-gradient(rgba(243, 241, 236, 0.16) 1px, transparent 1.4px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(60% 70% at 70% 35%, #000 10%, transparent 75%);
   }
-  .grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(52,211,153,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(52,211,153,0.05) 1px, transparent 1px);
-    background-size: 52px 52px;
+  .glow {
+    position: absolute; width: 760px; height: 760px; right: -220px; top: -300px;
+    background: radial-gradient(closest-side, rgba(255, 91, 34, 0.2), transparent);
   }
-  .content {
-    position: relative; z-index: 2;
-    padding: 66px 78px;
-    display: flex; flex-direction: column; height: 100%;
+  .content { position: relative; height: 100%; padding: 60px 72px 52px; display: flex; flex-direction: column; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .kicker, .url {
+    font-family: "JetBrains Mono", monospace; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase;
   }
-  .tag {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 14px; letter-spacing: 0.12em;
-    color: #34d399;
-    border: 1px solid rgba(52,211,153,0.35);
-    background: rgba(52,211,153,0.07);
-    padding: 9px 18px; border-radius: 999px;
-    width: fit-content;
-  }
-  .tag .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; }
-  h1 {
-    margin-top: 44px;
-    font-size: 84px; font-weight: 700; letter-spacing: -0.028em; line-height: 1.02;
-  }
-  h1 .accent { color: #34d399; }
-  .sub {
-    margin-top: 22px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 21px; color: #b7c2c6; letter-spacing: -0.01em;
-  }
-  .sub .dim { color: #515b60; }
-  .kpis {
-    margin-top: auto;
-    display: flex; gap: 0;
-    border-top: 1px solid #1e2429;
-    padding-top: 28px;
-  }
-  .kpis .k { padding-right: 54px; }
-  .kpis .k + .k { padding-left: 54px; border-left: 1px solid #1e2429; }
-  .kpis .v {
-    font-size: 36px; font-weight: 700; color: #34d399; letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
-  }
-  .kpis .v.gold { color: #e8b64c; }
-  .kpis .l {
-    margin-top: 7px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12.5px; color: #7d8a8f; letter-spacing: 0.1em;
-  }
-  .foot {
-    position: absolute; bottom: 40px; right: 78px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 13.5px; color: #515b60; letter-spacing: 0.1em;
-  }
+  .kicker { display: flex; align-items: center; gap: 12px; color: #ff5b22; }
+  .kicker::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: #ff5b22; }
+  .url { color: #8d8a84; text-transform: none; letter-spacing: 0.04em; }
+  h1 { margin-top: 40px; font-size: 92px; font-weight: 760; letter-spacing: -0.04em; line-height: 1; }
+  .tag { margin-top: 20px; max-width: 900px; font-size: 29px; line-height: 1.35; color: #bdbab3; letter-spacing: -0.01em; }
+  .tag b { color: #f3f1ec; font-weight: 620; }
+  .chart { position: relative; height: 70px; margin-top: auto; }
+  .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .kpis { display: flex; margin-top: 22px; border-top: 1px solid #25272e; }
+  .k { flex: 1; padding-top: 20px; }
+  .k + .k { padding-left: 28px; border-left: 1px solid #25272e; }
+  .v { font-size: 40px; font-weight: 700; font-stretch: 112%; letter-spacing: -0.035em; line-height: 1; }
+  .l { margin-top: 10px; font-family: "JetBrains Mono", monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #8d8a84; }
 </style>
 </head>
 <body>
-  <div class="amb"></div>
-  <div class="grid"></div>
+  <div class="glow"></div>
+  <div class="dots"></div>
   <div class="content">
-    <div class="tag"><span class="dot"></span>STAFF SRE · PLATFORM LEADERSHIP · DUBAI</div>
-    <h1>Jatin <span class="accent">·kumar·</span> Ray</h1>
-    <div class="sub">
-      Reliability engineering at the scale of a billion calls a day<span class="dim"> — 14+ years, 3 clouds, zero drama.</span>
+    <div class="top">
+      <span class="kicker">Staff SRE · Observability · AIOps</span>
+      <span class="url">jatinkray.github.io</span>
+    </div>
+    <h1>Jatin Kumar Ray</h1>
+    <p class="tag">Reliability for <b>1B+ API calls a day</b>. AI agents in the incident loop, <b>humans in charge</b>.</p>
+    <div class="chart">
+      <svg viewBox="0 0 600 70" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
+            <stop offset="0" stop-color="#8d8a84"/><stop offset=".28" stop-color="#8d8a84"/>
+            <stop offset=".28" stop-color="#ff5b22"/><stop offset=".72" stop-color="#ff5b22"/>
+            <stop offset=".72" stop-color="#3ddc97"/><stop offset="1" stop-color="#3ddc97"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="46" x2="600" y2="46" stroke="#5a5852" stroke-width="1" stroke-dasharray="4 5" vector-effect="non-scaling-stroke"/>
+        <path d="M0 56 L36 55 L72 57 L108 55 L144 56 L168 54 L192 48 L216 32 L240 20 L264 14 L288 12 L312 13 L336 11 L360 13 L384 12 L408 13 L432 22 L456 38 L480 52 L504 55 L540 54 L576 56 L600 55" fill="none" stroke="url(#g)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+      </svg>
     </div>
     <div class="kpis">
-      <div class="k"><div class="v">1B+</div><div class="l">API CALLS / DAY</div></div>
-      <div class="k"><div class="v gold">$2M</div><div class="l">SAVED / YEAR</div></div>
-      <div class="k"><div class="v">99.5%</div><div class="l">API UPTIME</div></div>
-      <div class="k"><div class="v">2</div><div class="l">PRODUCTS SHIPPED</div></div>
+      <div class="k"><div class="v">1B+</div><div class="l">API calls a day</div></div>
+      <div class="k"><div class="v">$2M/yr</div><div class="l">cloud cost cut</div></div>
+      <div class="k"><div class="v">&minus;70%</div><div class="l">MTTR</div></div>
+      <div class="k"><div class="v">14+ yrs</div><div class="l">in production</div></div>
     </div>
   </div>
-  <div class="foot">jatinkray.github.io</div>
 </body>
 </html>
