@@ -18,7 +18,7 @@
   var syncTheme = function () {
     var light = doc.getAttribute("data-theme") === "light";
     if (themeBtn) themeBtn.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
-    if (themeMeta) themeMeta.setAttribute("content", light ? "#f5f3ef" : "#0b0c0e");
+    if (themeMeta) themeMeta.setAttribute("content", light ? "#f6f7fb" : "#070a12");
   };
   if (themeBtn) {
     themeBtn.addEventListener("click", function () {

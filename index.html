@@ -33,7 +33,7 @@
       content="Reliability for 1B+ API calls a day, $2M/yr in cloud savings, and AI-native operations with MCP agents and human approvals."
     />
     <meta name="twitter:image" content="https://jatinkray.github.io/assets/img/og-image.png" />
-    <meta name="theme-color" content="#0b0c0e" />
+    <meta name="theme-color" content="#070a12" />
 
     <script>
       (function () {
@@ -98,6 +98,10 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
+    <div class="sky" aria-hidden="true">
+      <div class="sky-beam sky-beam-a"></div>
+      <div class="sky-beam sky-beam-b"></div>
+    </div>
     <a class="skip" href="#main">Skip to content</a>
 
     <!-- icon sprite (Lucide paths, ISC; brand marks from Simple Icons, CC0) -->
@@ -114,6 +118,7 @@
       <symbol id="i-replay" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></symbol>
       <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></symbol>
       <symbol id="i-expand" viewBox="0 0 24 24"><path d="M15 3h6v6" /><path d="M9 21H3v-6" /><path d="M21 3l-7 7" /><path d="M3 21l7-7" /></symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /><path d="M12 14v4M10 16h4" /></symbol>
       <symbol id="i-in" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 17.34V10.4H6.04v6.94h2.3zM7.19 9.4a1.34 1.34 0 1 0 0-2.68 1.34 1.34 0 0 0 0 2.68zM18 17.34v-3.8c0-2.04-.44-3.6-2.82-3.6-1.14 0-1.91.62-2.23 1.22h-.03v-1.03H10.7v6.94h2.3v-3.43c0-.9.17-1.78 1.29-1.78 1.1 0 1.12 1.03 1.12 1.84v3.37H18z" /></symbol>
       <symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3" /></symbol>
     </svg>
@@ -162,6 +167,9 @@
               <a class="btn btn-primary" href="mailto:jatin.kumar.ray@gmail.com?subject=Staff%20SRE%20%2F%20AIOps%20role">
                 Email me <svg class="ic" aria-hidden="true"><use href="#i-arrow" /></svg>
               </a>
+              <a class="btn btn-ghost" href="https://calendar.app.google/UeL3HzWYcFycLKg27" target="_blank" rel="noopener">
+                <svg class="ic" aria-hidden="true"><use href="#i-cal" /></svg> Book a call
+              </a>
               <a class="btn btn-ghost" href="public/Jatin_Kumar_Ray_CV.pdf" target="_blank" rel="noopener">
                 <svg class="ic" aria-hidden="true"><use href="#i-down" /></svg> Download CV
               </a>
@@ -175,7 +183,7 @@
             <ul class="proof" aria-label="Headline results">
               <li><span class="n">1B+</span><span class="l">API calls a day on the SRE platform I led</span><span class="src">Careem</span></li>
               <li><span class="n">$2M/yr</span><span class="l">cloud cost cut through telemetry tiering and retention</span><span class="src">Careem</span></li>
-              <li><span class="n">&minus;70%</span><span class="l">mean time to recovery after an observability rebuild</span><span class="src">HungerStation</span></li>
+              <li><span class="n">&minus;70%</span><span class="l">mean time to recovery after an observability rebuild</span><span class="src">Careem</span></li>
               <li><span class="n">200–500</span><span class="l">node Kubernetes clusters run in production</span><span class="src">HungerStation</span></li>
             </ul>
           </div>
@@ -261,7 +269,7 @@
                 </li>
                 <li data-t="20.2" data-p="0.837" data-state="resolved">
                   <time>14:10:05</time><span class="who who-agent">Agent</span>
-                  <span class="what"><code>slack.post</code> <code>jira.create</code> Postmortem draft opened.</span>
+                  <span class="what"><code>slack.post</code> <code>jira.create</code> <code>notion.publish</code> Postmortem documented and published.</span>
                 </li>
               </ol>
             </div>
@@ -277,14 +285,22 @@
       <section class="orgs" aria-label="Companies">
         <div class="wrap orgs-in">
           <p class="kicker">Previously at</p>
-          <ul>
-            <li>Careem <span>Uber</span></li>
-            <li>HungerStation <span>Delivery Hero</span></li>
-            <li>Carrefour <span>Majid Al Futtaim</span></li>
-            <li>McKinsey &amp; Company</li>
-            <li>G4S</li>
-            <li>Aon</li>
-          </ul>
+          <div class="orgs-mask">
+            <ul>
+              <li>Careem <span>Uber</span></li>
+              <li>HungerStation <span>Delivery Hero</span></li>
+              <li>Carrefour <span>Majid Al Futtaim</span></li>
+              <li>McKinsey &amp; Company</li>
+              <li>G4S</li>
+              <li>Aon</li>
+              <li aria-hidden="true">Careem <span>Uber</span></li>
+              <li aria-hidden="true">HungerStation <span>Delivery Hero</span></li>
+              <li aria-hidden="true">Carrefour <span>Majid Al Futtaim</span></li>
+              <li aria-hidden="true">McKinsey &amp; Company</li>
+              <li aria-hidden="true">G4S</li>
+              <li aria-hidden="true">Aon</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -644,10 +660,16 @@
             </button>
             <span class="copy-msg" role="status"></span>
           </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://calendar.app.google/UeL3HzWYcFycLKg27" target="_blank" rel="noopener">
+              <svg class="ic" aria-hidden="true"><use href="#i-cal" /></svg> Book a 30-min call
+            </a>
+          </div>
           <div class="contact-links">
             <a class="btn btn-ghost" href="https://linkedin.com/in/jatinkray" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-in" /></svg> LinkedIn</a>
             <a class="btn btn-ghost" href="https://github.com/jatinkray" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-gh" /></svg> GitHub</a>
             <a class="btn btn-ghost" href="public/Jatin_Kumar_Ray_CV.pdf" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-down" /></svg> CV (PDF)</a>
+            <a class="btn btn-ghost" href="https://calendar.app.google/UeL3HzWYcFycLKg27" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-cal" /></svg> Book a call</a>
           </div>
         </div>
       </section>
